@@ -9,7 +9,7 @@ class Application(TkinterDnD.Tk):
     def __init__(self):
         super().__init__()
         self.title("DataPylot")
-        self.iconbitmap("./../pylot.ico")
+        self.iconbitmap("./pylot.ico")
         self.geometry("850x800")
 
         self.main_pane = tk.PanedWindow(
