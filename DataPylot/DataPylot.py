@@ -54,8 +54,6 @@ class Application(TkinterDnD.Tk):
 
         self.SessionData = SessionData(self)
 
-        self.SessionData.TryAddDataFrame("adult", "C:/Users/setha/475/Capstone/adult.csv")
-
 def main():
     app = Application()
     app.mainloop()
