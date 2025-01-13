@@ -1,0 +1,12 @@
+Importing a dataset is the entry point for a machine learning workflow.
+
+The Pandas library defines the DataFrame object, which is used to hold a 
+structured dataset and perform common operations on it.
+
+To load a dataset stored as a file on your computer into a DataFrame within
+your python environment, Pandas contains functions that take the filepath, 
+relative to the current working directory, or the absolute filepath
+(which DataPylot uses).
+
+To view a DataFrame in a formatted way, the head(n) function is used to 
+display the first n rows, with a default value of 5 rows.

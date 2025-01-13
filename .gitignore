@@ -1,0 +1,14 @@
+# Ignore Visual Studio-specific files
+.vs/
+*.sln
+
+# Ignore Python cache files
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+
+# Ignore IDE-specific project files
+*.pyproj
+
+# (Optional) Ignore macOS Finder metadata files
+.DS_Store
