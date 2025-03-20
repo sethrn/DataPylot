@@ -68,3 +68,6 @@ class SequentialFrameManager(ttk.Frame):
         frame = self.frames.pop(self.current_idx)
         frame.destroy()
         self.current_idx -= 1
+
+    def frame_count(self):
+        return len(self.frames)

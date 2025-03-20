@@ -14,6 +14,7 @@ class IDFrame(GenerateCodeFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.file_path = ""
+        self.colab_mode = tk.BooleanVar(value=False)
 
         if hasattr(sys, '_MEIPASS'):
             base_dir = Path(sys._MEIPASS)
@@ -52,6 +53,15 @@ class IDFrame(GenerateCodeFrame):
         rows_suffix_label = ttk.Label(self.content_frame, text="rows")
         rows_suffix_label.grid(row=4, column=0, padx=(105,5), pady=5, sticky="nw")
 
+        self.colab_checkbox = ttk.Checkbutton(
+            self.content_frame,
+            text="Using Google Colab",
+            variable=self.colab_mode
+        )
+        self.colab_checkbox.grid(row=5, column=0, padx=5, pady=5, sticky="nw")
+
+        self.content_frame.grid_columnconfigure(0, weight=1)
+
         self.content_frame.grid_columnconfigure(0, weight=1)  
 
         self.reset_inputs()
@@ -89,6 +99,7 @@ class IDFrame(GenerateCodeFrame):
     def generate_code(self):
         name = self.name_entry.get().strip()
         rows = self.rows_entry.get().strip()
+        colab_mode = self.colab_mode.get()
 
         if not self.validate_rows(rows):
             self.fp_label.config(
@@ -107,23 +118,23 @@ class IDFrame(GenerateCodeFrame):
         existing_names = self.winfo_toplevel().SessionData.getDFNames()
 
         if name in set(existing_names):
-            self.open_overwrite_popup(name)
+            self.open_overwrite_popup(name, rows, colab_mode)
             return
-        self.finalize_code_generation(name, rows)
+        self.finalize_code_generation(name, rows, colab_mode)
 
 
-    def open_overwrite_popup(self, name):
+    def open_overwrite_popup(self, name, rows, colab_mode):
         PopupDialog(
             self,
             title="Duplicate DataFrame Name",
             message=f"A DataFrame named '{name}' already exists.\nDo you want to overwrite it?",
-            on_right=lambda: self.finalize_code_generation(name, self.rows_entry.get().strip()),
+            on_right=lambda: self.finalize_code_generation(name, rows, colab_mode),
             on_left=lambda: self.fp_label.config(text="Action cancelled.", foreground="black"),
             rightButton="Yes",
             leftButton="No"
         )
 
-    def finalize_code_generation(self, name, rows):
+    def finalize_code_generation(self, name, rows, colab_mode):
         status = self.winfo_toplevel().SessionData.TryAddDataFrame(name, self.file_path)
 
         if status == 1:
@@ -132,7 +143,7 @@ class IDFrame(GenerateCodeFrame):
             self.fp_label.config(text="Error: Could not load the file.", foreground="red")
         
         with_import = self.include_import_var.get()
-        code, imports = ImportGenerator.generate(self.file_path, name, rows, with_import)
+        code, imports = ImportGenerator.generate(self.file_path, name, rows, with_import, colab_mode)
         
         if code:
             self.winfo_toplevel().SessionData.addOutput(code)
@@ -147,3 +158,4 @@ class IDFrame(GenerateCodeFrame):
         self.rows_entry.insert(0, "5")
         self.generate_btn.config(state="disabled")
         self.file_path = ""
+        self.colab_mode.set(False)

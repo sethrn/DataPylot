@@ -100,7 +100,6 @@ class SaveOutlierFrame(GenerateCodeFrame):
         self.err_label.grid(row=3, column=0, columnspan=2, padx=5, pady=(25,5), sticky="n")
 
         self.content_frame.grid_columnconfigure(0, weight=1)
-        self.content_frame.grid_columnconfigure(1, weight=1)
 
         self.generate_btn.config(state="disabled")
         

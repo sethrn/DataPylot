@@ -54,6 +54,8 @@ class Application(TkinterDnD.Tk):
 
         self.SessionData = SessionData(self)
 
+        self.SessionData.TryAddDataFrame("titanic", "C:/Users/setha/DataPylot/titanic.csv")
+
 def main():
     app = Application()
     app.mainloop()
