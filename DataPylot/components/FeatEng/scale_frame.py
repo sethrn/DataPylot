@@ -20,12 +20,21 @@ class ScaleFrames(SequentialFrameManager):
 
         self.next_btn.config(state="disabled")
 
+    def next_frame(self):
+        if self.current_index == 0:
+            self.frames[0].on_manager_next_button()
+            self.show_frame(1)
+        else:
+            if self.current_index < len(self.frames) - 1:
+                self.show_frame(self.current_index + 1)
+
 class ScaleOperationFrame(ttk.Frame):
     def __init__(self, parent, manager):
         super().__init__(parent)
 
         self.manager = manager
         self.df_names = self.winfo_toplevel().SessionData.getDFNames()
+        self.selected_indices = None
 
         top_label = ttk.Label(
             self,
@@ -34,12 +43,19 @@ class ScaleOperationFrame(ttk.Frame):
         )
         top_label.grid(row=0, column=0, padx=5,pady=(20,5),sticky="n")
 
+        self.out_label = ttk.Label(
+            self,
+            text="Feature scaling should generally be done after handling outliers to avoid extreme values dominating transformations.",
+            font=("Arial", 8)
+        )
+        self.out_label.grid(row=1, column=0, padx=5, pady=(20, 5), sticky="n")
+
         select_df_text = ttk.Label(
             self,
             text="Select DataFrame:",
             font=("Arial", 12)
         )
-        select_df_text.grid(row=1, column=0, padx=5, pady=(20,5), sticky="w")
+        select_df_text.grid(row=2, column=0, padx=5, pady=(15,5), sticky="w")
 
         self.df_dropdown = ttk.Combobox(
             self,
@@ -47,7 +63,7 @@ class ScaleOperationFrame(ttk.Frame):
             values=self.df_names,
             width=30
         )
-        self.df_dropdown.grid(row=1, column=0, padx=(250,5), pady=(20,5), sticky="w")
+        self.df_dropdown.grid(row=2, column=0, padx=(250,5), pady=(15,5), sticky="w")
         self.df_dropdown.bind("<<ComboboxSelected>>", lambda e: self.on_df_selected())
 
         select_feat_text = ttk.Label(
@@ -55,22 +71,25 @@ class ScaleOperationFrame(ttk.Frame):
             text="Select Feature:",
             font=("Arial", 12)
         )
-        select_feat_text.grid(row=2, column=0, padx=5, pady=(15, 5), sticky="w")
+        select_feat_text.grid(row=3, column=0, padx=5, pady=(15, 5), sticky="w")
 
-        self.feat_dropdown = ttk.Combobox(
+        self.feature_listbox = tk.Listbox(self, selectmode="extended", height=10, width=30)
+        self.feature_listbox.grid(row=3, column=0, padx=(250,5), pady=(15,5), sticky="w")
+        self.feature_listbox.bind("<<ListboxSelect>>", lambda e: self.on_feat_selected())
+
+        instruction_label = ttk.Label(
             self,
-            state="disabled",
-            width=30
+            text="Hold Ctrl key to select multiple features or Shift key to select a range of features.",
+            font=("Arial", 8)
         )
-        self.feat_dropdown.grid(row=2, column=0, padx=(250,5), pady=(15, 5), sticky="w")
-        self.feat_dropdown.bind("<<ComboboxSelected>>", lambda e: self.on_feat_selected())
+        instruction_label.grid(row=4, column=0, padx=5, pady=(5, 5), sticky="ns")
 
         self.tech_text = ttk.Label(
             self,
             text="Select Technique:",
             font=("Arial", 12)
          )
-        self.tech_text.grid(row=3, column=0, padx=5, pady=(15, 5), sticky="w")
+        self.tech_text.grid(row=5, column=0, padx=5, pady=(15, 5), sticky="w")
 
         self.tech_var = tk.StringVar(value="")
 
@@ -82,7 +101,7 @@ class ScaleOperationFrame(ttk.Frame):
             value="stand",
             command=lambda: self.on_tech_selected()
         )
-        self.zscore_radio.grid(row=3, column=0, padx=(175,5), pady=(15, 5), sticky="w")
+        self.zscore_radio.grid(row=5, column=0, padx=(175,5), pady=(15, 5), sticky="w")
 
         self.log_radio = ttk.Radiobutton(
             self,
@@ -92,7 +111,7 @@ class ScaleOperationFrame(ttk.Frame):
             value="log",
              command=lambda: self.on_tech_selected()
         )
-        self.log_radio.grid(row=3, column=0, padx=(340, 5), pady=(15, 5), sticky="w")
+        self.log_radio.grid(row=5, column=0, padx=(340, 5), pady=(15, 5), sticky="w")
 
         self.sqrt_radio = ttk.Radiobutton(
             self,
@@ -102,14 +121,7 @@ class ScaleOperationFrame(ttk.Frame):
             value="sqrt",
              command=lambda: self.on_tech_selected()
         )
-        self.sqrt_radio.grid(row=3, column=0, padx=(475, 5), pady=(15, 5), sticky="w")
-
-        self.out_label = ttk.Label(
-            self,
-            text="Feature scaling should generally be done after handling outliers to avoid extreme values dominating transformations.",
-            font=("Arial", 8)
-        )
-        self.out_label.grid(row=4, column=0, padx=5, pady=(150, 5), sticky="s")
+        self.sqrt_radio.grid(row=5, column=0, padx=(475, 5), pady=(15, 5), sticky="w")
 
         self.grid_columnconfigure(0, weight=1)
 
@@ -121,42 +133,53 @@ class ScaleOperationFrame(ttk.Frame):
 
         features = [feature for feature in self.df.columns if is_numeric_dtype(self.df[feature])]
 
-        self.feat_dropdown.config(
-            state="readonly",
-            values=features
-        )
-        self.feat_dropdown.set("")
-        self.tech_var.set("")
+        self.feature_listbox.delete(0, tk.END)
+        for feat in features:
+            self.feature_listbox.insert(tk.END, feat)
 
         self.zscore_radio.config(state="disabled")
         self.log_radio.config(state="disabled")
         self.sqrt_radio.config(state="disabled")
+        self.tech_var.set("")
 
         self.manager.next_btn.config(state="disabled")
 
     def on_feat_selected(self):
-        if self.df_dropdown.get() and self.feat_dropdown.get():
+        selected_indices = list(self.feature_listbox.curselection())
+        if self.df_dropdown.get() and selected_indices is not None:
             self.zscore_radio.config(state="normal")
             self.log_radio.config(state="normal")
             self.sqrt_radio.config(state="normal")
+            self.selected_indices = selected_indices
+        else:
+            self.zscore_radio.config(state="disabled")
+            self.log_radio.config(state="disabled")
+            self.sqrt_radio.config(state="disabled")
+            self.selected_indices = None
 
+        self.tech_var.set("")
         self.manager.next_btn.config(state="disabled")
 
     def on_tech_selected(self):
-        if self.df_dropdown.get() and self.feat_dropdown.get() and self.tech_var.get():
-            self.capture_state()
-
-            if self.manager.frame_count() != 1:
-                self.manager.delete_frame_by_index(1)
-
-            self.manager.add_frame(SaveScaleFrame, manager=self.manager)
-            self.manager.show_frame(0)
+        if self.df_dropdown.get() and self.selected_indices and self.tech_var.get():
+            self.manager.next_btn.config(state="enabled")
 
     def capture_state(self):
+        features = []
+        for i in self.selected_indices:
+            features.append(self.feature_listbox.get(i))
+
         self.manager.params['df'] = self.df_dropdown.get()
-        self.manager.params['feature'] = self.feat_dropdown.get()
+        self.manager.params['features'] = features
         self.manager.params['technique'] = self.tech_var.get()
 
+    def on_manager_next_button(self):
+        self.capture_state()
+
+        if self.manager.frame_count() != 1:
+            self.manager.delete_frame_by_index(1)
+
+        self.manager.add_frame(SaveScaleFrame, manager=self.manager)
     
 class SaveScaleFrame(GenerateCodeFrame):
     def __init__(self, parent, manager):
@@ -164,6 +187,7 @@ class SaveScaleFrame(GenerateCodeFrame):
 
         self.manager = manager
         self.params = manager.params
+        self.single_feat = False
         
         top_label = ttk.Label(
             self.content_frame,
@@ -180,6 +204,7 @@ class SaveScaleFrame(GenerateCodeFrame):
         save_df_text.grid(row=1, column=0, padx=5, pady=(30,15), sticky="w")
 
         self.save_df_var = tk.StringVar(value="")
+        self.save_col_var = tk.StringVar(value="")
 
         self.current_df_radio = ttk.Radiobutton(
             self.content_frame,
@@ -207,38 +232,39 @@ class SaveScaleFrame(GenerateCodeFrame):
         )
         self.new_df_entry.grid(row=1, column=0, padx=(400, 5), pady=(30,15), sticky="w")
 
-        save_col_text = ttk.Label(
-        self.content_frame,
-        text="Save Column:",
-        font=("Arial", 12)
-        )
-        save_col_text.grid(row=2, column=0, padx=5, pady=(30,15), sticky="w")
-
-        self.save_col_var = tk.StringVar(value="")
-        self.current_col_radio = ttk.Radiobutton(
+        if self.params["features"] and len(self.params["features"]) == 1:
+            self.single_feat = True
+            save_col_text = ttk.Label(
             self.content_frame,
-            text="Current Column",
-            variable=self.save_col_var,
-            value="current",
-            command=self.on_save_col_selected
-        )
-        self.current_col_radio.grid(row=2, column=0, padx=(150, 5), pady=(30,15), sticky="w")
+            text="Save Column:",
+            font=("Arial", 12)
+            )
+            save_col_text.grid(row=2, column=0, padx=5, pady=(30,15), sticky="w")
 
-        self.new_col_radio = ttk.Radiobutton(
-            self.content_frame,
-            text="New Column:",
-            variable=self.save_col_var,
-            value="new",
-            command=self.on_save_col_selected
-        )
-        self.new_col_radio.grid(row=2, column=0, padx=(275, 5), pady=(30,15), sticky="w")
+            self.current_col_radio = ttk.Radiobutton(
+                self.content_frame,
+                text="Current Column",
+                variable=self.save_col_var,
+                value="current",
+                command=self.on_save_col_selected
+            )
+            self.current_col_radio.grid(row=2, column=0, padx=(150, 5), pady=(30,15), sticky="w")
 
-        self.new_col_entry = ttk.Entry(
-            self.content_frame,
-            state="disabled",
-            width=15
-        )
-        self.new_col_entry.grid(row=2, column=0, padx=(400, 5), pady=(30,15), sticky="w")
+            self.new_col_radio = ttk.Radiobutton(
+                self.content_frame,
+                text="New Column:",
+                variable=self.save_col_var,
+                value="new",
+                command=self.on_save_col_selected
+            )
+            self.new_col_radio.grid(row=2, column=0, padx=(275, 5), pady=(30,15), sticky="w")
+
+            self.new_col_entry = ttk.Entry(
+                self.content_frame,
+                state="disabled",
+                width=15
+            )
+            self.new_col_entry.grid(row=2, column=0, padx=(400, 5), pady=(30,15), sticky="w")
 
         self.err_label = ttk.Label(
             self.content_frame,
@@ -257,6 +283,8 @@ class SaveScaleFrame(GenerateCodeFrame):
             self.new_df_entry.config(state="normal")
         else:
             self.new_df_entry.config(state="disabled")
+        if not self.single_feat:
+            self.generate_btn.config(state="normal")
 
     def on_save_col_selected(self):
         if self.save_col_var.get() == "new":
@@ -313,7 +341,7 @@ class SaveScaleFrame(GenerateCodeFrame):
 
         code, imports = ScaleExecutor.generate(
             df=self.params["df"],
-            feature=self.params["feature"],
+            features=self.params["features"],
             technique=self.params["technique"],
             new_name=self.new_df_entry.get().strip() if self.save_df_var.get() == "new" else None, # new df name
             new_col=self.new_col_entry.get().strip() if self.save_col_var.get() == "new" else None, # new col name
@@ -326,16 +354,4 @@ class SaveScaleFrame(GenerateCodeFrame):
         if imports:
             self.winfo_toplevel().SessionData.addImports(imports)
 
-        self.reset_inputs()
-
-    def reset_inputs(self):
-        self.save_df_var.set("")
-        self.new_df_entry.delete(0, tk.END)
-        self.new_df_entry.config(state="disabled")
-
-        self.save_col_var.set("")
-        self.new_col_entry.delete(0, tk.END)
-        self.new_col_entry.config(state="disabled")
-
-        self.err_label.config(text="")
-        self.generate_btn.config(state="disabled")
+        self.winfo_toplevel().main_stage.refresh_children()

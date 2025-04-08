@@ -1,9 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import re
-from pathlib import Path
-import sys
-from TkinterDnD2 import DND_FILES
+
 
 from components.Patterns.generate_frame import GenerateCodeFrame
 from components.Patterns.popup_dialog import PopupDialog
@@ -16,27 +14,15 @@ class IDFrame(GenerateCodeFrame):
         self.file_path = ""
         self.colab_mode = tk.BooleanVar(value=False)
 
-        if hasattr(sys, '_MEIPASS'):
-            base_dir = Path(sys._MEIPASS)
-        else:
-            base_dir = Path(__file__).resolve().parent.parent.parent
-        
-        about_path = base_dir / "edu" / "Import" / "about.txt"
-
-        self.winfo_toplevel().SessionData.setAboutStep(str(about_path))
-        
-        self.drop_target_register(DND_FILES)
-        self.dnd_bind("<<Drop>>", self.validate_file)
-
         top_label = ttk.Label(self.content_frame, text="Import A Dataset", font=("Arial", 14))
-        top_label.grid(row=0, column=0, padx=10, pady=(20,5), sticky="n")
+        top_label.grid(row=0, column=0, padx=10, pady=(20, 5), sticky="n")
 
         self.dnd_frame = DnDFrame(self.content_frame, id_frame_ref=self)
         self.dnd_frame.grid(row=1, column=0, padx=10, pady=5, sticky="n")
 
         self.fp_label = ttk.Label(self.content_frame, text="File Path:", font=("Arial", 10))
         self.fp_label.grid(row=2, column=0, padx=5, pady=5, sticky="n")
-        
+
         name_label = ttk.Label(self.content_frame, text="Enter DataFrame name:")
         name_label.grid(row=3, column=0, padx=5, pady=5, sticky="nw")
 
@@ -44,14 +30,14 @@ class IDFrame(GenerateCodeFrame):
         self.name_entry.grid(row=3, column=0, padx=(140, 5), pady=5, sticky="nw")
 
         rows_label = ttk.Label(self.content_frame, text="Display first")
-        rows_label.grid(row=4, column=0, padx=(5,5), pady=5, sticky="nw")
+        rows_label.grid(row=4, column=0, padx=(5, 5), pady=5, sticky="nw")
 
         self.rows_entry = ttk.Entry(self.content_frame, width=5)
         self.rows_entry.insert(0, "5")
         self.rows_entry.grid(row=4, column=0, padx=(70, 5), pady=5, sticky="nw")
 
         rows_suffix_label = ttk.Label(self.content_frame, text="rows")
-        rows_suffix_label.grid(row=4, column=0, padx=(105,5), pady=5, sticky="nw")
+        rows_suffix_label.grid(row=4, column=0, padx=(105, 5), pady=5, sticky="nw")
 
         self.colab_checkbox = ttk.Checkbutton(
             self.content_frame,
@@ -62,8 +48,6 @@ class IDFrame(GenerateCodeFrame):
 
         self.content_frame.grid_columnconfigure(0, weight=1)
 
-        self.content_frame.grid_columnconfigure(0, weight=1)  
-
         self.reset_inputs()
 
     def validate_file(self, event):
@@ -71,10 +55,7 @@ class IDFrame(GenerateCodeFrame):
         suffixes = (".txt", ".csv", ".tsv", ".xlsx", ".json")
 
         if file_path.endswith(suffixes):
-            self.fp_label.config(
-                text=f"File Path: {file_path}",
-                foreground="black"
-            )
+            self.fp_label.config(text=f"File Path: {file_path}", foreground="black")
             self.generate_btn.config(state="normal")
             self.file_path = file_path
         else:
@@ -83,7 +64,6 @@ class IDFrame(GenerateCodeFrame):
                 foreground="red"
             )
             self.generate_btn.config(state="disabled")
-
             self.file_path = ""
 
     def validate_name(self, name):
@@ -91,8 +71,7 @@ class IDFrame(GenerateCodeFrame):
 
     def validate_rows(self, rows):
         try:
-            rows = int(rows)
-            return rows > 0
+            return int(rows) > 0
         except ValueError:
             return False
 
@@ -103,7 +82,7 @@ class IDFrame(GenerateCodeFrame):
 
         if not self.validate_rows(rows):
             self.fp_label.config(
-                text="Error: Rows must be a positive integer.", 
+                text="Error: Rows must be a positive integer.",
                 foreground="red"
             )
             return
@@ -117,11 +96,10 @@ class IDFrame(GenerateCodeFrame):
 
         existing_names = self.winfo_toplevel().SessionData.getDFNames()
 
-        if name in set(existing_names):
+        if name in existing_names:
             self.open_overwrite_popup(name, rows, colab_mode)
-            return
-        self.finalize_code_generation(name, rows, colab_mode)
-
+        else:
+            self.finalize_code_generation(name, rows, colab_mode)
 
     def open_overwrite_popup(self, name, rows, colab_mode):
         PopupDialog(
@@ -141,10 +119,10 @@ class IDFrame(GenerateCodeFrame):
             self.fp_label.config(text=f"File successfully loaded as DataFrame '{name}'", foreground="green")
         else:
             self.fp_label.config(text="Error: Could not load the file.", foreground="red")
-        
+
         with_import = self.include_import_var.get()
         code, imports = ImportGenerator.generate(self.file_path, name, rows, with_import, colab_mode)
-        
+
         if code:
             self.winfo_toplevel().SessionData.addOutput(code)
         if imports:

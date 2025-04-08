@@ -19,14 +19,11 @@ class BinFrame(SequentialFrameManager):
         self.next_btn.config(state="disabled")
 
     def next_frame(self):
-        if self.current_index != 0:
-            if self.current_index < len(self.frames) - 1:
-                self.show_frame(self.current_index + 1)
-        else:
+        tech = self.params["technique"]
+        if self.current_index == 0:
             if len(self.frames) > 1:
                 self.frames = self.frames[:1]
-
-            tech = self.params["technique"]
+            
             if tech in ("distance", "frequency"):
                 self.add_frame(NBinsFrame, manager=self)
             elif tech == "range":
@@ -35,6 +32,12 @@ class BinFrame(SequentialFrameManager):
                 self.add_frame(BinCustomFrame, manager=self)
 
             self.show_frame(1)
+        elif self.current_index == 1 and tech in ("custom", "range"):
+            self.frames[1].on_manager_next_button()
+            self.show_frame(2)
+        else:
+            if self.current_index < len(self.frames) - 1:
+                self.show_frame(self.current_index + 1)
 
 class BinFeatureFrame(ttk.Frame):
     def __init__(self, parent, manager):
@@ -90,13 +93,13 @@ class BinFeatureFrame(ttk.Frame):
         self.frequency_radio.grid(row=3, column=0, padx=(375,5), pady=(15,5), sticky="w")
 
         self.range_radio = ttk.Radiobutton(
-            self, text="Bin By Custom Range", variable=self.tech_var, value="range",
+            self, text="Bin By Custom Ranges", variable=self.tech_var, value="range",
             state="disabled", command=self.on_tech_selected
         )
         self.range_radio.grid(row=4, column=0, padx=(225, 5), pady=(15,5), sticky="w")
 
         self.custom_radio = ttk.Radiobutton(
-            self, text="Bin By Distance", variable=self.tech_var, value="custom",
+            self, text="Create Custom Bins", variable=self.tech_var, value="custom",
             state="disabled", command=self.on_tech_selected
         )
         self.custom_radio.grid(row=4, column=0, padx=(375, 5), pady=(15,5), sticky="w")

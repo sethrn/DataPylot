@@ -1,1 +1,11 @@
-Detect Missing Values
+Handling missing data is an important step in preparing your 
+dataset for machine learning. If left unhandled, missing values can skew 
+your analysis, disrupt model training, or cause errors.
+In this section, DataPylot helps you identify where missing values exist 
+in your dataset, giving you visibility into which features have gaps and 
+how severe those gaps are.
+
+To begin, select a DataFrame from your session. The generated code will 
+scan each column and count how many values are missing.
+To handle the missing values you've detected, head over to the 'Cleaning'
+section and use the 'Handle Missing Values' window.

@@ -1,0 +1,17 @@
+Sometimes, datasets contain inconsistencies or typos in their feature 
+values. A column might have values like "Male", "Male.", and "M" all 
+representing the same category, or it might contain incorrect entries 
+that need to be fixed before meaningful analysis or modeling can occur. 
+The Rename Feature Values section helps address these inconsistencies.
+
+In this window, you’ll begin by selecting a column from your DataFrame. 
+Then, you can pick one or more existing values and specify a new name 
+that should replace them. This change is then applied to the selected 
+column in a copy of your dataset, with the updated value(s) reflected 
+throughout.
+
+This feature is intended to support data cleaning, not feature 
+transformation. If your goal is to group values into categories or 
+to convert them into numeric codes for model training, consider using 
+the Custom Binning or Encode Categorical windows in the 
+Feature Engineering section.

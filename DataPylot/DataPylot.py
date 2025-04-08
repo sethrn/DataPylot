@@ -1,15 +1,24 @@
-
 import tkinter as tk
-from TkinterDnD2 import TkinterDnD
+from pathlib import Path
+import sys
 
 from components import SideTabs, MainStage, CodeWindow, FeatureTabs
 from session.session_data import SessionData
 
-class Application(TkinterDnD.Tk):
+class Application(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("DataPylot")
-        self.iconbitmap("./pylot.ico")
+
+        if hasattr(sys, '_MEIPASS'):
+            base_dir = Path(sys._MEIPASS)
+        else:
+            base_dir = Path(__file__).resolve().parent
+        try:
+            self.iconbitmap(str(base_dir/"pylot.ico"))
+        except Exception as e:
+            print(f".ico file failure")
+
         self.geometry("850x800")
 
         self.main_pane = tk.PanedWindow(
@@ -54,7 +63,6 @@ class Application(TkinterDnD.Tk):
 
         self.SessionData = SessionData(self)
 
-        self.SessionData.TryAddDataFrame("titanic", "C:/Users/setha/DataPylot/titanic.csv")
 
 def main():
     app = Application()

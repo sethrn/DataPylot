@@ -1,0 +1,25 @@
+Visualizations are one of the most powerful tools for understanding 
+your dataset. They allow you to uncover patterns, spot anomalies, 
+compare distributions, and gain intuition about relationships.
+
+In DataPylot, visualizations are organized into three categories:
+
+Univariate plots explore a single variable. These include count plots, 
+histograms, box plots, kernel density estimates, and pie charts.
+
+Bivariate plots explore relationships between two variables. Examples 
+include scatter plots, line plots, violin plots, swarm plots, 
+and grouped count/box plots.
+
+Multivariate plots add a third dimension, such as grouping or 
+color-coding by category. These include grouped scatter/line/violin plots, 
+as well as heatmaps and pair plots to detect correlations or patterns.
+
+Each plot type offers customizable options such as axis selection, 
+color schemes, transparency, legend display, marker style, and more
+all accessible through a simple user interface. You can generate code 
+that reflects your specific plot settings without having to memorize syntax.
+
+Most plots are built using Seaborn, a Python library built on top of Matplotlib.
+Seaborn offers high-level functionality working directly with DataFrames, and
+Matplotlib provides the foundational plotting tools and customization support.

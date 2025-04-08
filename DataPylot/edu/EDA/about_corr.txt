@@ -1,1 +1,22 @@
-Detect Correlations
+Understanding the relationships between features is key to effective 
+data analysis and modeling. Correlation analysis helps you quantify how 
+strongly two numeric variables are associated. This can reveal redundant 
+features, highlight influential predictors, or uncover patterns.
+
+In this step, you’ll choose a correlation method to apply across your 
+selected DataFrame.
+
+Pearson’s correlation measures linear relationships between numeric variables 
+and is the most commonly used. It assumes normally distributed data and is
+sensitive to outliers. 
+
+Spearman’s rank correlation works by ranking values and measuring how well 
+the relationship between variables can be described using a monotonic function. 
+It’s more robust to outliers and non-linear patterns. 
+
+Kendall’s tau, another rank-based measure, focuses on the consistency of pairwise 
+rankings and is particularly useful when dealing with smaller datasets or ties.
+
+The generated code will return a correlation matrix that summarizes the 
+relationships between all numeric features in your dataset. You can then use this 
+to identify multicollinearity, reduce dimensionality, or engineer new features.

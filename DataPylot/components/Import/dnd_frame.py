@@ -28,7 +28,7 @@ class DnDFrame(ttk.Frame):
 
         self.label1 = ttk.Label(
             self, 
-            text="Drag & Drop A File", 
+            text="Select File:", 
             font=("Arial", 12), 
             anchor="center",
             background="lightgray"

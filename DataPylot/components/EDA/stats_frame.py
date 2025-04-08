@@ -1,7 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from pathlib import Path
-import sys
 
 from CodeGenerators.EDA.gen_stats import StatsGenerator
 from components.Patterns.generate_frame import GenerateCodeFrame
@@ -9,15 +7,6 @@ from components.Patterns.generate_frame import GenerateCodeFrame
 class StatsFrame(GenerateCodeFrame):
     def __init__(self, parent):
         super().__init__(parent)
-
-        if hasattr(sys, '_MEIPASS'):
-            base_dir = Path(sys._MEIPASS)
-        else:
-            base_dir = Path(__file__).resolve().parent.parent.parent
-        
-        about_path = base_dir / "edu" / "EDA" / "about_stats.txt"
-
-        self.winfo_toplevel().SessionData.setAboutStep(str(about_path))
         
         self.df_names = self.winfo_toplevel().SessionData.getDFNames()
 
@@ -66,8 +55,7 @@ class StatsFrame(GenerateCodeFrame):
             checkbox.grid(row=i+2, column=0, sticky="w", padx=(250,5), pady=5)
 
         self.content_frame.grid_columnconfigure(0, weight=1)  
-
-        self.reset_inputs()
+        self.generate_btn.config(state="disabled")
 
     def on_dropdown_selected(self, event):
         if self.df_dropdown.get():
@@ -76,7 +64,7 @@ class StatsFrame(GenerateCodeFrame):
         self.update_generate_btn()
 
     def update_generate_btn(self):
-        if any(var.get() for _, var in self.cb_refs):
+        if any(var.get() for _, var in self.cb_refs) and self.df_dropdown.get():
             self.generate_btn.config(state="normal")
         else:
             self.generate_btn.config(state="disabled")
@@ -90,7 +78,7 @@ class StatsFrame(GenerateCodeFrame):
             self.shape_var.get(), 
             self.info_var.get(),
             self.summary_var.get(), 
-            self.info_var.get(), 
+            self.vc_var.get(), 
             with_import
         )
 
@@ -105,7 +93,7 @@ class StatsFrame(GenerateCodeFrame):
         for _, var in self.cb_refs:
             var.set(False)
         if len(self.df_names) > 0:
-            self.df_dropdown.current(0)
+            self.df_dropdown.set("")
             for checkbox, _ in self.cb_refs:
                 checkbox.config(state="normal")
 

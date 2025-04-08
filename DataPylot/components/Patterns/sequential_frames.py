@@ -5,7 +5,7 @@ class SequentialFrameManager(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         self.frames = []
-        self.current_idx = 0
+        self.current_index = 0
 
         self.params = {}
 
@@ -65,9 +65,9 @@ class SequentialFrameManager(ttk.Frame):
             frame.destroy()
 
     def delete_current_frame(self):
-        frame = self.frames.pop(self.current_idx)
+        frame = self.frames.pop(self.current_index)
         frame.destroy()
-        self.current_idx -= 1
+        self.current_index -= 1
 
     def frame_count(self):
         return len(self.frames)

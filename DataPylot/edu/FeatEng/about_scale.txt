@@ -1,0 +1,27 @@
+Scaling your numeric features is an essential part of many machine 
+learning workflows. Some algorithms, especially those that rely on 
+distance calculations (like k-nearest neighbors or support vector machines), 
+are sensitive to the range and distribution of feature values. Features 
+with larger numeric ranges can dominate the behavior of a model unless 
+all features are brought onto a similar scale.
+
+In this section, you can apply one of several common transformation 
+techniques to one or more numeric features in your dataset:
+
+Standardization transforms the data into a distribution with a mean of 
+0 and a standard deviation of 1, also known as z-score normalization. 
+It is often a safe default and works well when your data is roughly 
+normally distributed.
+
+Log transformation is useful for compressing the scale of highly skewed 
+features, often those with a long tail or exponential growth patterns. 
+It can help reduce the impact of extreme outliers and stabilize variance. 
+
+Square root transformation is a lighter alternative to log transformation 
+and can be helpful for moderately skewed data, especially when your values 
+are non-negative.
+
+You can apply any of these techniques to multiple features at once. 
+Scaling doesn’t change the relationships between features, but it can make 
+those relationships easier for a model to understand when it has to account 
+for all of the features at once.

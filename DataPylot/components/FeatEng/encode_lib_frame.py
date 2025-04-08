@@ -229,22 +229,5 @@ class EncodeLibFrame(GenerateCodeFrame):
         if imports:
             self.winfo_toplevel().SessionData.addImports(imports)
 
-        self.reset_inputs()
+        self.winfo_toplevel().main_stage.refresh_children()
 
-    def reset_inputs(self):
-        self.save_df_var.set("")
-        self.new_df_entry.delete(0, tk.END)
-        self.new_df_entry.config(state="disabled")
-
-        self.save_col_var.set("")
-        self.drop_first_var.set(False)
-
-        if self.tech == "ordinal":
-            self.new_col_entry.delete(0, tk.END)
-            self.new_col_entry.config(state="disabled")
-        elif self.tech == "onehot":
-            self.prefix_entry.delete(0, tk.END)
-            self.prefix_entry.insert(0, "encoded")
-
-        self.err_label.config(text="")
-        self.generate_btn.config(state="disabled")

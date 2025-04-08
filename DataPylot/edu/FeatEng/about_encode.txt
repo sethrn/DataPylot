@@ -1,0 +1,27 @@
+Many Machine learning models typically require numerical input. If your 
+dataset contains categorical values, such as names, labels, or grouped 
+categories, you might need to convert them into a format that models can
+interpret. This process is called feature encoding, and in DataPylot, 
+you have several encoding options to choose from:
+
+Ordinal encoding assigns a unique integer to each category 
+based on order of appearance. This method is simple but assumes an 
+inherent order to your categories, which may not always be appropriate.
+
+One-hot encoding creates a new column for each category and marks its 
+presence with a binary indicator (1 or 0). It's well-suited for unordered 
+categorical data and is commonly used in models that can handle many features.
+
+Binary encoding takes a more compact approach, converting categories into 
+binary numbers spread across fewer columns. This is useful when working with
+features with high-cardinality (many different possible values).
+
+For full control, custom encoding allows you to manually assign numeric values 
+to each category. This is helpful when you know the relative importance or 
+relationship between categories that standard encoders can’t capture. 
+You can also use this to apply a custom Ordinal encoding.
+
+You can apply encoding to any feature, whether it's currently categorical 
+or numeric. If your goal is to group continuous numeric values into discrete 
+bins, such as labeling age ranges or income brackets, you may prefer the 
+Bin Features section instead.

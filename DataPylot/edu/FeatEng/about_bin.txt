@@ -1,0 +1,27 @@
+Binning is the process of transforming continuous numerical values 
+into discrete categories. This can be useful for simplifying models, 
+handling skewed data, or introducing domain-specific logic into your 
+dataset. 
+In DataPylot, you have several binning strategies, allowing you to create 
+meaningful groupings tailored to your data and goal.
+
+You can start with automatic binning methods:
+Equal Distance divides the range of values into evenly spaced intervals. 
+Equal Frequency ensures that each bin contains roughly the same number 
+of data points. For both, you can specify the number of bins and choose 
+how the result should be encoded: either ordinal encoding 
+(placing all results in a single column with numeric labels) or 
+one-hot encoding (producing a binary column for each bin).
+
+If your data requires more control, DataPylot offers Custom Range Binning, 
+where you define the exact cutoff points for each bin. This is ideal for 
+domain-specific thresholds (e.g., age groups or income brackets). 
+
+For even more flexibility, Create Custom Bins allows you to hand-select 
+which values should belong in each bin, especially helpful for non-numeric 
+or irregular groupings.
+
+Binning helps capture non-linear relationships, reduce the impact of outliers,
+or prepare your data for models that perform better with categorical features. 
+It is recommended that you label your bins with a numeric label, as some
+models require numeric input.

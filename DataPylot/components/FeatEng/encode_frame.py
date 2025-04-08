@@ -15,20 +15,23 @@ class EncodingFrames(SequentialFrameManager):
         self.next_btn.config(state="disabled")
 
     def next_frame(self):
-        if self.current_index != 0:
-            if self.current_index < len(self.frames) - 1:
-                self.show_frame(self.current_index + 1)
-        else:
+        tech = self.params["technique"]
+        if self.current_index == 0:
             if len(self.frames) > 1:
                 self.frames = self.frames[:1]
 
-            tech = self.params["technique"]
             if tech == "custom":
                 self.add_frame(EncodeCustomFrame, manager=self)
             elif tech in ("ordinal", "onehot", "binary"):
                 self.add_frame(EncodeLibFrame, manager=self)
 
-            self.show_frame(self.current_index+1)
+            self.show_frame(1)
+        elif self.current_index == 1 and tech == "custom":
+            self.frames[1].on_manager_next_button()
+            self.show_frame(2)
+        else:
+            if self.current_index < len(self.frames) - 1:
+                self.show_frame(self.current_index + 1)
     
 class EncodeFeatureFrame(ttk.Frame):
     def __init__(self, parent, manager):

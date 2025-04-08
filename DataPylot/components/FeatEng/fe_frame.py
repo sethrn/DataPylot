@@ -12,7 +12,7 @@ class FETabFrame(OperationTabFrame):
     def __init__(self, parent):
         super().__init__(parent)
 
-        self.add_tab(ScaleFrames, "Scale Numeric Feature")
+        self.add_tab(ScaleFrames, "Scale Numeric Features")
         self.add_tab(EncodingFrames, "Encode Feature")
-        self.add_tab(BinFrame, "Bin Features")
+        self.add_tab(BinFrame, "Bin Numeric Feature")
         self.add_tab(InteractionFrame, "Create Interaction Term")

@@ -16,6 +16,10 @@ class RenameFrames(SequentialFrameManager):
 
         self.next_btn.config(state="disabled")
 
+    def next_frame(self):
+        if self.current_index == 0:
+            self.frames[0].on_manager_next_button()
+
 class RenameValueFrame(ttk.Frame):
     def __init__(self, parent, manager):
         super().__init__(parent)
@@ -131,20 +135,28 @@ class RenameValueFrame(ttk.Frame):
     def validate_value(self):
         if self.rename_to_entry.get().strip():
             self.rename_err.config(text="")
-            selected_indices = self.values_listbox.curselection()
-            self.selected_values = [self.values_listbox.get(i) for i in selected_indices]
-            if self.df_dropdown.get() and self.feat_dropdown.get() and self.selected_values:
-                self.capture_state()
-                self.manager.delete_frame_by_index(1)
-                self.manager.add_frame(SaveRenameFrame, manager=self.manager)
-                self.manager.show_frame(0)
+            self.manager.next_btn.config(state="normal")
         else:
             self.rename_err.config(text="Enter a valid new name for the value(s).")
+            self.manager.next_btn.config(state="disabled")
 
     def capture_state(self):
         self.manager.params['df_name'] = self.df_name
         self.manager.params['feature'] = self.selected_feature
         self.manager.params['values'] = self.selected_values
         self.manager.params['rename'] = self.rename_to_entry.get().strip()
+
+    def on_manager_next_button(self):
+        selected_indices = self.values_listbox.curselection()
+        self.selected_values = [self.values_listbox.get(i) for i in selected_indices]
+        if self.df_dropdown.get() and self.feat_dropdown.get() and self.selected_values:
+            self.capture_state()
+            if self.manager.frame_count() != 2:
+                self.manager.delete_frame_by_index(2)
+            self.manager.add_frame(SaveRenameFrame, manager=self.manager)
+            self.manager.show_frame(1)
+        else:
+            self.manager.next_btn.config(state="disabled")
+            
 
 

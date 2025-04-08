@@ -1,8 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from pathlib import Path
-import sys
-from wsgiref import validate
 
 from components.Patterns.generate_frame import GenerateCodeFrame
 from CodeGenerators.EDA.gen_anom import OutlierGenerator
@@ -10,15 +7,6 @@ from CodeGenerators.EDA.gen_anom import OutlierGenerator
 class OutlierFrame(GenerateCodeFrame):
     def __init__(self, parent):
         super().__init__(parent)
-
-        if hasattr(sys, '_MEIPASS'):
-            base_dir = Path(sys._MEIPASS)
-        else:
-            base_dir = Path(__file__).resolve().parent.parent.parent
-        
-        about_path = base_dir / "edu" / "EDA" / "about_outlier.txt"
-
-        self.winfo_toplevel().SessionData.setAboutStep(str(about_path))
 
         self.df_names = self.winfo_toplevel().SessionData.getDFNames()
 
@@ -50,7 +38,7 @@ class OutlierFrame(GenerateCodeFrame):
             text="Select Data Type to Analyze:",
             font=("Arial", 10)
         )
-        select_data_text.grid(row=2, column=0, padx=5, pady=(50,5), sticky="w")
+        select_data_text.grid(row=2, column=0, padx=5, pady=(15,5), sticky="w")
 
         self.data_type_var = tk.StringVar(value="")
         self.numeric_radio = ttk.Radiobutton(
@@ -60,7 +48,7 @@ class OutlierFrame(GenerateCodeFrame):
             value="numerical",
             command=self.on_data_type_selected
         )
-        self.numeric_radio.grid(row=2, column=0, padx=(225, 5), pady=(50,5), sticky="w")
+        self.numeric_radio.grid(row=2, column=0, padx=(225, 5), pady=(15,5), sticky="w")
 
         self.categorical_radio = ttk.Radiobutton(
             self.content_frame,
@@ -69,16 +57,17 @@ class OutlierFrame(GenerateCodeFrame):
             value="categorical",
             command=self.on_data_type_selected
         )
-        self.categorical_radio.grid(row=2, column=0, padx=(350, 5), pady=(50,5), sticky="w")
+        self.categorical_radio.grid(row=2, column=0, padx=(350, 5), pady=(15,5), sticky="w")
 
         
-
+        self.technique_var = tk.StringVar(value="")
         self.tech_text = None
         self.tukey_radio = None
         self.zscore_radio = None
 
         self.parameter_label = None
         self.parameter_entry = None
+        self.param_err = None
 
         self.generate_btn.config(state="disabled")
         self.content_frame.grid_columnconfigure(0, weight=1)
@@ -88,6 +77,9 @@ class OutlierFrame(GenerateCodeFrame):
             self.parameter_label.destroy()
         if self.parameter_entry:
             self.parameter_entry.destroy()
+        if self.param_err:
+            self.param_err.destroy()
+        self.tech_var.set("")
 
         if self.data_type_var.get() == "numerical":
             self.tech_text = ttk.Label(
@@ -95,20 +87,19 @@ class OutlierFrame(GenerateCodeFrame):
                 text="Select Technique:",
                 font=("Arial", 10)
             )
-            self.tech_text.grid(row=3, column=0, padx=5, pady=(50,5), sticky="w")
+            self.tech_text.grid(row=3, column=0, padx=5, pady=(15,5), sticky="w")
 
-            self.technique_var = tk.StringVar(value="")
             self.tukey_radio = ttk.Radiobutton(
                 self.content_frame, text="Tukey's Fence", variable=self.technique_var, value="Tukey",
                 command=self.on_technique_selected
             )
-            self.tukey_radio.grid(row=3, column=0, padx=(200, 5), pady=(50,5), sticky="w")
+            self.tukey_radio.grid(row=3, column=0, padx=(225, 5), pady=(15,5), sticky="w")
         
             self.zscore_radio = ttk.Radiobutton(
                 self.content_frame, text="Z-Score Method", variable=self.technique_var, value="ZScore",
                 command=self.on_technique_selected
             )
-            self.zscore_radio.grid(row=3, column=0, padx=(325, 5), pady=(50,5), sticky="w")
+            self.zscore_radio.grid(row=3, column=0, padx=(350, 5), pady=(15,5), sticky="w")
        
         elif self.data_type_var.get() == "categorical":
             if self.tech_text:
@@ -123,21 +114,21 @@ class OutlierFrame(GenerateCodeFrame):
                 text="Set Proportional Threshold:",
                 font=("Arial", 10)    
             )
-            self.parameter_label.grid(row=3, column=0, padx=5, pady=(50,5), sticky="w")
+            self.parameter_label.grid(row=3, column=0, padx=5, pady=(15,5), sticky="w")
 
             self.parameter_entry = ttk.Entry(
                 self.content_frame,
                 width=10
             )
             self.parameter_entry.insert(0, "0.01")
-            self.parameter_entry.grid(row=3, padx=(200, 5), pady=(50,5), sticky="w")
+            self.parameter_entry.grid(row=3, padx=(225, 5), pady=(15,5), sticky="w")
 
             self.param_err = ttk.Label(
                 self.content_frame,
                 text="",
                 font=("Arial", 10)
             )
-            self.param_err.grid(row=3, column=0, padx=(250,5), pady=(50,5), sticky="w")
+            self.param_err.grid(row=4, column=0, padx=(250,5), pady=(15,5), sticky="w")
 
             self.validate_inputs()
             
@@ -146,6 +137,8 @@ class OutlierFrame(GenerateCodeFrame):
             self.parameter_label.destroy()
         if self.parameter_entry:
             self.parameter_entry.destroy()
+        if self.param_err:
+            self.param_err.destroy()
 
         if self.technique_var.get() == "Tukey":
             self.parameter_label = ttk.Label(
@@ -162,27 +155,27 @@ class OutlierFrame(GenerateCodeFrame):
             )
             default_param = "3.0"
 
-        self.parameter_label.grid(row=4, column=0, padx=5, pady=(50,5), sticky="w")
+        self.parameter_label.grid(row=4, column=0, padx=5, pady=(15,5), sticky="w")
 
         self.parameter_entry = ttk.Entry(
             self.content_frame, 
             width=10
         )
         self.parameter_entry.insert(0, default_param)
-        self.parameter_entry.grid(row=4, column=0, padx=(200, 5), pady=(50,5), sticky="w")
+        self.parameter_entry.grid(row=4, column=0, padx=(225, 5), pady=(15,5), sticky="w")
 
         self.param_err = ttk.Label(
             self.content_frame,
             text="",
             font=("Arial", 10)
         )
-        self.param_err.grid(row=4, column=0, padx=(250,5), pady=(50,5), sticky="w")
+        self.param_err.grid(row=5, column=0, padx=(250,5), pady=(15,5), sticky="w")
 
         self.validate_inputs()
 
     def validate_inputs(self):
         df_selected = self.df_dropdown.get().strip()
-        param_valid = self.validate_param(self.parameter_entry.get().strip()) if self.parameter_entry else False
+        param_valid = self.validate_param(self.parameter_entry.get().strip()) if self.parameter_entry is not None else False
         technique_selected = self.technique_var.get() if self.data_type_var.get() == "numerical" else True
 
         if df_selected and param_valid and technique_selected:
@@ -237,29 +230,4 @@ class OutlierFrame(GenerateCodeFrame):
         if imports:
             self.winfo_toplevel().SessionData.addImports(imports)
 
-        self.reset_inputs()
-
-    def reset_inputs(self):
-        self.df_dropdown.set("")
-        self.data_type_var.set("")
-        self.technique_var.set("")
-
-        if self.tech_text:
-            self.tech_text.destroy()
-        if self.tukey_radio:
-            self.tukey_radio.destroy()
-        if self.zscore_radio:
-            self.zscore_radio.destroy()
-        if self.parameter_label:
-            self.parameter_label.destroy()
-        if self.parameter_entry:
-            self.parameter_entry.destroy()
-
-        self.generate_btn.config(state="disabled")
-
-
-
-
-        
-
-
+        self.winfo_toplevel().main_stage.refresh_children()

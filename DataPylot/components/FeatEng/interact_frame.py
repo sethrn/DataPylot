@@ -217,26 +217,5 @@ class InteractionFrame(GenerateCodeFrame):
         if imports:
             self.winfo_toplevel().SessionData.addImports(imports)
 
-        self.reset_inputs()
+        self.winfo_toplevel().main_stage.refresh_children()
 
-    def reset_inputs(self):
-        self.df_dropdown.set("")
-        self.feat1_dropdown.set("")
-        self.feat2_dropdown.set("")
-    
-        self.feat1_dropdown.config(state="disabled")
-        self.feat2_dropdown.config(state="disabled")
-
-        self.feature_entry.delete(0, tk.END)
-        self.feature_entry.config(state="readonly")
-
-        self.save_df_var.set("")
-        self.new_df_entry.delete(0, tk.END)
-        self.new_df_entry.config(state="disabled")
-
-        self.current_df_radio.config(state="disabled")
-        self.new_df_radio.config(state="disabled")
-
-        self.generate_btn.config(state="disabled")
-
-        self.err_label.config(text="")

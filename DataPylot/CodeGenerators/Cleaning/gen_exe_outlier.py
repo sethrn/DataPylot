@@ -1,4 +1,3 @@
-from numpy._core.defchararray import upper
 import pandas as pd
 
 class OutlierExecutor:

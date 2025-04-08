@@ -1,7 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from pathlib import Path
-import sys
 import pandas as pd
 
 from components.Patterns.generate_frame import GenerateCodeFrame
@@ -10,15 +8,6 @@ from CodeGenerators.EDA.gen_corr import CorrelationGenerator
 class CorrelationFrame(GenerateCodeFrame):
     def __init__(self, parent):
         super().__init__(parent)
-
-        if hasattr(sys, '_MEIPASS'):
-            base_dir = Path(sys._MEIPASS)
-        else:
-            base_dir = Path(__file__).resolve().parent.parent.parent
-        
-        about_path = base_dir / "edu" / "EDA" / "about_corr.txt"
-
-        self.winfo_toplevel().SessionData.setAboutStep(str(about_path))
 
         self.df_names = self.winfo_toplevel().SessionData.getDFNames()
 
@@ -55,11 +44,11 @@ class CorrelationFrame(GenerateCodeFrame):
             values=["Pearson Coefficient", "Spearman Rank", "Kendall Tau"],
             width=30
         )
-        self.tech_dropdown.current(0)
         self.tech_dropdown.grid(row=3, column=0, padx=(250,5), pady=(50,5), sticky="w")
         self.tech_dropdown.bind("<<ComboboxSelected>>", lambda e: self.validate_input())
 
         self.content_frame.grid_columnconfigure(0, weight=1)
+        self.generate_btn.config(state="disabled")
 
     def validate_input(self):
         if self.df_dropdown.get().strip() and self.tech_dropdown.get().strip():
@@ -93,7 +82,6 @@ class CorrelationFrame(GenerateCodeFrame):
 
     def reset_inputs(self):
         self.df_dropdown.set("")
-        self.tech_dropdown.current(0)
         self.validate_input()
 
 

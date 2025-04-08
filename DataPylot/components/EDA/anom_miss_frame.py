@@ -1,6 +1,4 @@
 from tkinter import ttk
-from pathlib import Path
-import sys
 
 from components.Patterns.generate_frame import GenerateCodeFrame
 from CodeGenerators.EDA.gen_anom import MissingValGenerator
@@ -8,15 +6,6 @@ from CodeGenerators.EDA.gen_anom import MissingValGenerator
 class MissingFrame(GenerateCodeFrame):
     def __init__(self, parent):
         super().__init__(parent)
-
-        if hasattr(sys, '_MEIPASS'):
-            base_dir = Path(sys._MEIPASS)
-        else:
-            base_dir = Path(__file__).resolve().parent.parent.parent
-        
-        about_path = base_dir / "edu" / "EDA" / "about_outlier.txt"
-
-        self.winfo_toplevel().SessionData.setAboutStep(str(about_path))
 
         top_label = ttk.Label(
             self.content_frame, 
@@ -54,8 +43,4 @@ class MissingFrame(GenerateCodeFrame):
         if imports:
             self.winfo_toplevel().SessionData.addImports(imports)
 
-        self.reset_inputs()
-
-    def reset_inputs(self):
-        self.df_dropdown.set("")
-        self.validate_input()
+        self.winfo_toplevel().main_stage.refresh_children()

@@ -1,12 +1,16 @@
-Importing a dataset is the entry point for a machine learning workflow.
+The first step in any data-driven project is loading the data. 
+In DataPylot, this means importing a dataset and converting it into a 
+Pandas DataFrame, a foundational data structure used in Python for 
+data analysis. DataFrames allow you to explore, manipulate, and 
+visualize your data.
 
-The Pandas library defines the DataFrame object, which is used to hold a 
-structured dataset and perform common operations on it.
+Importing a dataset in DataPylot is simple. Click the file browser to upload a 
+supported file (.csv, .tsv, .txt, .xlsx, or .json) from your device. If 
+you're working in Google Colab, there's an alternative option to mount and 
+access your drive, so you can work with files stored in your Google account.
 
-To load a dataset stored as a file on your computer into a DataFrame within
-your python environment, Pandas contains functions that take the filepath, 
-relative to the current working directory, or the absolute filepath
-(which DataPylot uses).
-
-To view a DataFrame in a formatted way, the head(n) function is used to 
-display the first n rows, with a default value of 5 rows.
+Before finalizing your import, you’ll give your DataFrame a custom name. 
+Once imported, your dataset becomes available to all other stages of 
+the workflow, unlocking exploration, cleaning, modeling, and more.
+For the rest of the session, you'll access your DataFrames by name, and 
+DataPylot will keep track of any changes you make to your DataFrames.

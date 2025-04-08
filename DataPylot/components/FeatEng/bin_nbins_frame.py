@@ -254,25 +254,5 @@ class NBinsFrame(GenerateCodeFrame):
         if imports:
             self.winfo_toplevel().SessionData.addImports(imports)
 
-        self.reset_inputs()
-
-
-    def reset_inputs(self):
-        self.save_df_var.set("")
-        self.new_df_entry.delete(0, tk.END)
-        self.new_df_entry.config(state="disabled")
-
-        self.save_col_var.set("")
-        if hasattr(self, "new_col_entry"):
-            self.new_col_entry.delete(0, tk.END)
-            self.new_col_entry.config(state="disabled")
-
-        self.encoding_var.set("ordinal")
-        self.nbins_entry.delete(0, tk.END)
-
-        if self.prefix_entry:
-            self.prefix_entry.delete(0, tk.END)
-
-        self.on_encoding_selected()
-        self.err_label.config(text="")
+        self.winfo_toplevel().main_stage.refresh_children()
 

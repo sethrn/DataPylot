@@ -1,1 +1,20 @@
-Detect Outliers
+Outliers are data points that deviate significantly from most of the other 
+data points feature. While not always errors, they can distort statistical 
+summaries and negatively impact the performance of machine learning models. 
+Identifying outliers helps you better understand your data and decide whether 
+those points should be removed, corrected, or treated differently.
+
+In this step, you’ll choose the type of data to analyze: numerical or categorical. 
+For numerical data, you can use either Tukey’s Fence or Z-score methods. 
+
+Tukey’s Fence identifies outliers as values that fall a certain multiplier 
+beyond the interquartile range (IQR). 
+
+Z-score calculates how many standard deviations a value lies from the mean, 
+flagging those that exceed a threshold. Both are common and effective for spotting 
+unusually high or low values.
+
+For categorical data, DataPylot lets you define a proportional threshold, 
+flagging categories that appear infrequently relative to the rest of the dataset. 
+This helps highlight rare labels that might lack sufficient representation or 
+signal potential data quality issues.

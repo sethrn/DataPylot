@@ -1,0 +1,16 @@
+Not all features in a dataset are useful. As you may have discovered from 
+exploring the dataset, some feats may have too many missing values, 
+very low variability, or simply aren't relevant to your analysis. 
+Removing these features can help simplify your data, reduce noise, and 
+improve the performance of your machine learning models.
+
+In this section, you'll choose columns to drop from your DataFrame.
+You might remove features that were flagged during earlier analysis, 
+such as those with a high number of missing values or those that showed 
+no correlation with your target variable. You can select one or more 
+features to remove at once, and a new copy of your DataFrame will be 
+created without them.
+
+Removing irrelevant or redundant features is a common part of the 
+data cleaning and preparation process, helping ensure that your models 
+are trained only on the most informative inputs.

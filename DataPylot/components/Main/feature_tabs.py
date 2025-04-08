@@ -1,14 +1,14 @@
-from asyncio.windows_events import NULL
 import tkinter as tk
 from tkinter import ttk
 
 from components.Patterns.popup_dialog import PopupDialog
+from components.Main.data_manager_popup import DataFrameManagerPopup
 
 class FeatureTabs(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         self.app = self.winfo_toplevel()
-
+        
         self.import_stmt = ""
         
         style = ttk.Style()
@@ -34,7 +34,8 @@ class FeatureTabs(ttk.Frame):
 
         side_buttons = [
             ("About This Step", self.about_step),
-            ("View All Imports", self.collect_imports)
+            ("View All Imports", self.collect_imports),
+            ("Manage DataFrames", self.manage_dataframes)
         ]
         self.btn_refs = []
 
@@ -92,3 +93,6 @@ class FeatureTabs(ttk.Frame):
     def copy_imports(self):
         self.clipboard_clear()
         self.clipboard_append(self.import_stmt)
+
+    def manage_dataframes(self):
+        DataFrameManagerPopup(self, self.app.SessionData)

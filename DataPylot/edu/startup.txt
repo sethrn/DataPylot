@@ -1,0 +1,6 @@
+Welcome to DataPylot!
+
+When you're doing a particular operation, click the 'About This Step'
+for information on the available options you may take, as well as
+the considerations about the options to help you make informed, 
+strategic decisions.

@@ -1,1 +1,31 @@
-Missing Values Operations
+Missing values are a common challenge in real-world datasets, 
+and handling them correctly is essential for building reliable models. 
+There are a few different strategies for addressing missing data, 
+either by replacing missing values with a common value, 
+or by removing the affected rows/instances.
+
+Imputation means replacing a missing value with a reasonable substitute, 
+based on the data you do have.
+
+For numerical features, you can replace missing values with the mean, 
+median, or mode (most frequent value):
+
+Use the mean when your data is symmetrically distributed and not 
+heavily affected by outliers.
+Use the median when your data is skewed or contains outliers, since 
+it’s more robust to extreme values.
+Use the mode if your feature has repeated values or is discrete with 
+clear common entries.
+
+For categorical features, you replace missing values with the mode,
+or convert the column into an indicator column:
+
+Replacing missing values with the mode fills in the most commonly 
+seen category.
+Using an indicator this creates a new feature with 1s and 0s to 
+show whether each value was present or missing. This is useful
+when the absence of data itself may carry meaning.
+
+If too many values are missing in a particular column, you may prefer to 
+remove the entire feature instead. You can do this from the Remove Features 
+window in the Cleaning section.

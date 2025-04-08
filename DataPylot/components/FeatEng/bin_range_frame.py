@@ -65,9 +65,6 @@ class BinRangeFrame(ttk.Frame):
         self.delete_group_btn = ttk.Button(self, text="Delete Bin", width=14, state="disabled", command=self.on_delete_group_btn)
         self.delete_group_btn.grid(row=4, column=0, padx=(450, 5), pady=(15, 5), sticky="w")
 
-        self.finish_btn = ttk.Button(self, text="Finish", width=20, state="disabled", command=self.on_finish_btn)
-        self.finish_btn.grid(row=5, column=0, padx=5, pady=(50, 5), sticky="n")
-
         self.err_label = ttk.Label(self, text="", font=("Arial", 10), foreground="red")
         self.err_label.grid(row=6, column=0, padx=5, pady=(5, 10), sticky="n")
 
@@ -205,13 +202,12 @@ class BinRangeFrame(ttk.Frame):
         try:
             name = int(name)
         except ValueError:
-            self.string_label = True
+             self.err_label.config(text="Warning: Non-integer bin label detected, this column won't be numeric.")
+             self.string_label = True
 
         if name in bin_names:
             self.err_label.config(text="Error: Bin Name already exists.")
             return False
-        else:
-            self.err_label.config(text="Warning: Non-integer bin label detected, this column won't be numeric.")
 
         try:
             lower = float(lower)
@@ -274,7 +270,7 @@ class BinRangeFrame(ttk.Frame):
             self.next_btn.config(state="disabled")
             self.edit_group_btn.config(state="disabled")
             self.delete_group_btn.config(state="disabled")
-            self.finish_btn.config(state="disabled")
+            self.manager.next_btn.config(state="disabled")
             return
 
         # Ensure current index is within range
@@ -306,9 +302,9 @@ class BinRangeFrame(ttk.Frame):
        
         self.edit_group_btn.config(state="normal")
         self.delete_group_btn.config(state="normal")
-        self.finish_btn.config(state="normal")
+        self.manager.next_btn.config(state="normal")
 
-    def on_finish_btn(self):
+    def on_manager_next_button(self):
         group_dict = {name: [lower, upper] for name, lower, upper in zip(self.bin_names, self.lower_bounds, self.upper_bounds)}
         self.manager.params["bins"] = group_dict
 
@@ -316,7 +312,6 @@ class BinRangeFrame(ttk.Frame):
             self.manager.delete_frame_by_index(2)
 
         self.manager.add_frame(SaveBinRangeFrame, manager=self.manager)
-        self.manager.show_frame(1)
 
 class SaveBinRangeFrame(GenerateCodeFrame):
     def __init__(self, parent, manager):
@@ -486,16 +481,5 @@ class SaveBinRangeFrame(GenerateCodeFrame):
         if imports:
             self.winfo_toplevel().SessionData.addImports(imports)
 
-        self.reset_inputs()
+        self.winfo_toplevel().main_stage.refresh_children()
 
-    def reset_inputs(self):
-        self.save_df_var.set("")
-        self.new_df_entry.delete(0, tk.END)
-        self.new_df_entry.config(state="disabled")
-
-        self.save_col_var.set("")
-        self.new_col_entry.delete(0, tk.END)
-        self.new_col_entry.config(state="disabled")
-
-        self.err_label.config(text="")
-        self.generate_btn.config(state="disabled")

@@ -187,13 +187,4 @@ class RemoveFeatureFrame(GenerateCodeFrame):
         if imports:
             self.winfo_toplevel().SessionData.addImports(imports)
 
-        self.reset_inputs()
-
-    def reset_inputs(self):
-        self.df_dropdown.set("")
-        self.feat_listbox.delete(0, tk.END)      
-        self.save_df_var.set("")
-        self.current_df_radio.config(state="disabled")
-        self.new_df_radio.config(state="disabled")
-        self.new_df_entry.delete(0, tk.END)
-        self.generate_btn.config(state="disabled")
+        self.winfo_toplevel().main_stage.refresh_children()

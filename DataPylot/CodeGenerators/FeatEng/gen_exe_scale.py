@@ -4,68 +4,60 @@ import numpy as np
 
 class ScaleExecutor:
     @staticmethod
-    def generate(df, feature, technique, new_name=None, new_col=None, session=None, withImport=False):
+    def generate(df, features, technique, new_name=None, new_col=None, session=None, withImport=False):
         import_stmts = []
-        code = ""
+        code_lines = []
         result = None
 
         data = session.getDataFrame(df)
 
         if not isinstance(data, pd.DataFrame):
-            return code, import_stmts
+            return "", []
 
         if new_name is None:
             new_name = df
-        if new_col is None:
-            new_col = feature
 
         result = data.copy()
 
         if technique == "stand":
             import_stmts.append("from sklearn.preprocessing import StandardScaler")
+            code_lines.append(f"# Standardize {'multiple features' if len(features) > 1 else features[0]} using Z-score scaling")
+            code_lines.append("standard_scaler = StandardScaler()")
 
-            code += (
-                f"# Standardize '{feature}' using Z-score scaling\n"
-                f"standard_scaler = StandardScaler()\n"
-            )
             if new_name != df:
-                code += f"{new_name} = {df}.copy()\n"
-
-            code += (
-                f"{new_name}['{new_col}'] = standard_scaler.fit_transform({df}[['{feature}']])\n"
-            )
+                code_lines.append(f"{new_name} = {df}.copy()")
 
             scaler = StandardScaler()
-            result[new_col] = scaler.fit_transform(result[[feature]])
+
+            for feat in features:
+                col_name = new_col if new_col and len(features) == 1 else feat
+                code_lines.append(f"{new_name}['{col_name}'] = standard_scaler.fit_transform({df}[[\"{feat}\"]])")
+                result[col_name] = scaler.fit_transform(result[[feat]])
 
         elif technique == "log":
             import_stmts.append("import numpy as np")
-
-            code += (
-                f"# Apply Log Transformation to '{feature}'\n"
-                f"{new_name}['{new_col}'] = np.log({df}['{feature}'] + 1)  # Adding 1 to avoid log(0)\n"
-            )
             if new_name != df:
-                code = f"{new_name} = {df}.copy()\n" + code
+                code_lines.append(f"{new_name} = {df}.copy()")
 
-            result[new_col] = np.log(result[feature] + 1)
+            for feat in features:
+                col_name = new_col if new_col and len(features) == 1 else feat
+                code_lines.append(f"# Apply Log Transformation to '{feat}'")
+                code_lines.append(f"{new_name}['{col_name}'] = np.log({df}['{feat}'] + 1)  # Add 1 to avoid log(0)")
+                result[col_name] = np.log(result[feat] + 1)
 
         elif technique == "sqrt":
             import_stmts.append("import numpy as np")
-
-            code += (
-                f"# Apply Square Root Transformation to '{feature}'\n"
-                f"{new_name}['{new_col}'] = np.sqrt({df}['{feature}'])\n"
-            )
             if new_name != df:
-                code = f"{new_name} = {df}.copy()\n" + code
+                code_lines.append(f"{new_name} = {df}.copy()")
 
-            result[new_col] = np.sqrt(result[feature])
+            for feat in features:
+                col_name = new_col if new_col and len(features) == 1 else feat
+                code_lines.append(f"# Apply Square Root Transformation to '{feat}'")
+                code_lines.append(f"{new_name}['{col_name}'] = np.sqrt({df}['{feat}'])")
+                result[col_name] = np.sqrt(result[feat])
 
         session.addDataFrame(new_name, result)
 
-        if withImport:
-            import_stmt = "\n".join(import_stmts)
-            code = f"{import_stmt}\n\n{code}"
+        final_code = "\n".join(import_stmts) + "\n\n" + "\n".join(code_lines) if withImport else "\n".join(code_lines)
 
-        return code, import_stmts
+        return final_code, import_stmts

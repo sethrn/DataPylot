@@ -1,0 +1,30 @@
+Creating interaction terms is a powerful technique for capturing 
+relationships between features that aren't captured by looking at them 
+individually.
+In DataPylot, this operation allows you to multiply two numeric features 
+together to produce a new feature, one that represents their joint effect.
+
+This is especially useful when you suspect that the influence of one variable 
+on your target depends on the value of another. For example, in a housing 
+dataset, multiplying Square Footage by Number of Bedrooms might yield a more 
+informative feature than either on its own. Many machine learning models, 
+especially linear ones, can benefit from having these interaction terms 
+explicitly included.
+
+When creating interaction terms, it's important to consider how correlated 
+the original features are. If two features are highly correlated, their 
+interaction term may not add much new information and could introduce 
+redundancy or multicollinearity. In general, it’s a good idea to retain 
+the original features alongside their interaction terms during feature 
+engineering, then assess their combined value during model training or 
+feature selection. This lets the model decide which signals are most 
+predictive.
+
+To create higher-order polynomial terms (like squaring a feature or raising 
+it to a power), simply repeat the operation using the same feature multiple 
+times. This lets you capture more complex, nonlinear patterns in your data 
+without manual transformations outside of the tool.
+
+By generating interaction terms, you're expanding the feature space in a 
+way that can boost model accuracy, as long as the interactions are meaningful 
+and not overly redundant.

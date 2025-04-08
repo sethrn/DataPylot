@@ -28,22 +28,19 @@ class BinCustomFrame(ttk.Frame):
         top_label.grid(row=0, column=0, padx=5, pady=(20, 5), sticky="n")
 
         self.create_group_btn = ttk.Button(self, text="Create Bin", command=self.on_create_group_btn)
-        self.create_group_btn.grid(row=1, column=0, padx=(75, 5), pady=(30, 15), sticky="w")
-
-        self.err_label = ttk.Label(self, text="", font=("Arial", 10), foreground="red")
-        self.err_label.grid(row=1, column=0, padx=(465,5), pady=(30, 15), sticky="w")
+        self.create_group_btn.grid(row=1, column=0, padx=(100,5), pady=(10, 5), sticky="w")
 
         ungrouped_label = ttk.Label(self, text="Remaining Values:", font=("Arial", 10))
-        ungrouped_label.grid(row=2, column=0, padx=(75, 5), pady=(5, 5), sticky="w")
+        ungrouped_label.grid(row=2, column=0, padx=(100, 5), pady=(5, 5), sticky="w")
 
         self.group_label = ttk.Label(self, text="Current Bin:", font=("Arial", 10))
-        self.group_label.grid(row=2, column=0, padx=(325, 5), pady=(5, 5), sticky="w")
+        self.group_label.grid(row=2, column=0, padx=(300, 5), pady=(5, 5), sticky="w")
 
         self.ungrouped_listbox = tk.Listbox(self, selectmode="extended", height=10, width=30)
-        self.ungrouped_listbox.grid(row=3, column=0, padx=(75, 5), pady=(5, 5), sticky="w")
+        self.ungrouped_listbox.grid(row=3, column=0, padx=(100, 5), pady=(5, 5), sticky="w")
 
         self.grouped_listbox = tk.Listbox(self, selectmode="extended", height=10, width=30)
-        self.grouped_listbox.grid(row=3, column=0, padx=(325, 5), pady=(5, 5), sticky="w")
+        self.grouped_listbox.grid(row=3, column=0, padx=(300, 5), pady=(5, 5), sticky="w")
 
         self.ungrouped_listbox.bind("<<ListboxSelect>>", lambda e: self.on_select_ungrouped())
         self.grouped_listbox.bind("<<ListboxSelect>>", lambda e: self.on_select_grouped())
@@ -52,7 +49,7 @@ class BinCustomFrame(ttk.Frame):
             self.ungrouped_listbox.insert(tk.END, value)
 
         btn_frame = ttk.Frame(self)
-        btn_frame.grid(row=3, column=0, padx=(525, 5), pady=(5, 5), sticky="w")
+        btn_frame.grid(row=3, column=0, padx=(500, 5), pady=(5, 5), sticky="w")
 
         self.prev_btn = ttk.Button(btn_frame, text="Previous Bin", width=14, state="disabled", command=self.on_prev_btn)
         self.prev_btn.pack(pady=(0, 10))
@@ -64,13 +61,20 @@ class BinCustomFrame(ttk.Frame):
         self.delete_group_btn.pack()
 
         self.assign_btn = ttk.Button(self, text="Assign to Bin", state="disabled", command=self.on_assign_btn)
-        self.assign_btn.grid(row=4, column=0, padx=(120, 5), pady=(10, 5), sticky="w")
+        self.assign_btn.grid(row=4, column=0, padx=(150, 5), pady=(10, 5), sticky="w")
 
         self.remove_btn = ttk.Button(self, text="Remove from Bin", state="disabled", command=self.on_remove_btn)
-        self.remove_btn.grid(row=4, column=0, padx=(360, 5), pady=(10, 5), sticky="w")
+        self.remove_btn.grid(row=4, column=0, padx=(340, 5), pady=(10, 5), sticky="w")
 
-        self.finish_btn = ttk.Button(self, text="Finish", width=20, state="disabled", command=self.on_finish_button)
-        self.finish_btn.grid(row=5, column=0, padx=5, pady=(10, 5), sticky="n")
+        instruction_label = ttk.Label(
+            self,
+            text="Hold Ctrl key to select multiple features or Shift key to select a range of features.",
+            font=("Arial", 8)
+        )
+        instruction_label.grid(row=5, column=0, padx=(100,5), pady=(5, 5), sticky="w")
+
+        self.err_label = ttk.Label(self, text="", font=("Arial", 10), foreground="red")
+        self.err_label.grid(row=6, column=0, padx=5, pady=(10, 5), sticky="n")
 
         self.grid_columnconfigure(0, weight=1)
 
@@ -78,16 +82,16 @@ class BinCustomFrame(ttk.Frame):
         self.create_group_btn.destroy()
             
         self.set_group_label = ttk.Label(self, text="Set Bin Label:", font=("Arial", 10))
-        self.set_group_label.grid(row=1, column=0, padx=(75, 5), pady=(30, 15), sticky="w")
+        self.set_group_label.grid(row=1, column=0, padx=(100, 5), pady=(10, 5), sticky="w")
 
         self.group_name_entry = ttk.Entry(self, width=20)
-        self.group_name_entry.grid(row=1, column=0, padx=(200, 5), pady=(30, 15), sticky="w")
+        self.group_name_entry.grid(row=1, column=0, padx=(200, 5), pady=(10, 5), sticky="w")
 
         self.set_group_btn = ttk.Button(self, text="Set", width=8, command=self.on_set_group_btn)
-        self.set_group_btn.grid(row=1, column=0, padx=(335, 5), pady=(30, 15), sticky="w")
+        self.set_group_btn.grid(row=1, column=0, padx=(335, 5), pady=(10, 5), sticky="w")
 
         self.cancel_group_btn = ttk.Button(self, text="Cancel", width=8, command=self.on_cancel_group_btn)
-        self.cancel_group_btn.grid(row=1, column=0, padx=(400, 5), pady=(30, 15), sticky="w")
+        self.cancel_group_btn.grid(row=1, column=0, padx=(400, 5), pady=(10, 5), sticky="w")
 
         self.prev_btn.config(state="disabled")
         self.next_btn.config(state="disabled")
@@ -97,11 +101,12 @@ class BinCustomFrame(ttk.Frame):
 
     def on_set_group_btn(self):
         name = self.group_name_entry.get().strip()
-
+        warn_flag = False
         try:
             name = int(name)
         except ValueError:
             self.err_label.config(text="Warning: Non-integer bin label detected, this column won't be numeric.")
+            warn_flag = True
 
         if name in self.group_names:
             self.err_label.config(text="Error: Bin label already exists.")
@@ -117,8 +122,9 @@ class BinCustomFrame(ttk.Frame):
         self.cancel_group_btn.destroy()
 
         self.create_group_btn = ttk.Button(self, text="Create Bin", command=self.on_create_group_btn)
-        self.create_group_btn.grid(row=1, column=0, padx=(75, 5), pady=(30, 15), sticky="w")
-        self.err_label.config(text="")
+        self.create_group_btn.grid(row=1, column=0, padx=(100,5), pady=(10, 5), sticky="w")
+        if not warn_flag:
+            self.err_label.config(text="")
 
         self.update_nav()
 
@@ -129,7 +135,7 @@ class BinCustomFrame(ttk.Frame):
         self.cancel_group_btn.destroy()
 
         self.create_group_btn = ttk.Button(self, text="Create Bin", command=self.on_create_group_btn)
-        self.create_group_btn.grid(row=1, column=0, padx=(75, 5), pady=(30, 15), sticky="w")
+        self.create_group_btn.grid(row=1, column=0, padx=(100,5), pady=(10, 5), sticky="w")
         self.err_label.config(text="")
 
         self.update_nav()
@@ -150,6 +156,7 @@ class BinCustomFrame(ttk.Frame):
             self.next_btn.config(state="disabled")
             self.prev_btn.config(state="disabled")
             self.delete_group_btn.config(state="disabled")
+            self.update_group_display()
 
     def update_group_display(self):
         self.grouped_listbox.delete(0, tk.END)
@@ -196,7 +203,7 @@ class BinCustomFrame(ttk.Frame):
         del self.group_values[self.current_group_idx]
         del self.group_names[self.current_group_idx]
 
-        self.current_group_idx = max(0, self.current_group_idx - 1)
+        self.current_group_idx = self.current_group_idx - 1
 
         self.update_nav()
         self.update_ungrouped_display()
@@ -220,7 +227,7 @@ class BinCustomFrame(ttk.Frame):
 
         self.group_values[self.current_group_idx].sort()
 
-        self.finish_btn.config(state="normal" if not self.ungrouped_values else "disabled")
+        self.manager.next_btn.config(state="normal" if not self.ungrouped_values else "disabled")
         self.assign_btn.config(state="disabled")
 
         self.update_group_display()
@@ -244,20 +251,19 @@ class BinCustomFrame(ttk.Frame):
             self.ungrouped_values.add(value)
 
         self.remove_btn.config(state="disabled")
-        self.finish_btn.config(state="disabled")
+        self.manager.next_btn.config(state="disabled")
 
         self.update_group_display()
         self.update_ungrouped_display()
 
-    def on_finish_button(self):
+    def on_manager_next_button(self):
         group_dict = {name: values for name, values in zip(self.group_names, self.group_values)}
         self.manager.params["bins"] = group_dict
 
         if self.manager.frame_count() != 2:
-                self.manager.delete_frame_by_index(2)
+            self.manager.delete_frame_by_index(2)
 
         self.manager.add_frame(SaveCustomBinFrame, manager=self.manager)
-        self.manager.show_frame(1)
 
 class SaveCustomBinFrame(GenerateCodeFrame):
     def __init__(self, parent, manager):
@@ -428,16 +434,4 @@ class SaveCustomBinFrame(GenerateCodeFrame):
         if imports:
             self.winfo_toplevel().SessionData.addImports(imports)
 
-        self.reset_inputs()
-
-    def reset_inputs(self):
-        self.save_df_var.set("")
-        self.new_df_entry.delete(0, tk.END)
-        self.new_df_entry.config(state="disabled")
-
-        self.save_col_var.set("")
-        self.new_col_entry.delete(0, tk.END)
-        self.new_col_entry.config(state="disabled")
-
-        self.err_label.config(text="")
-        self.generate_btn.config(state="disabled")
+        self.winfo_toplevel().main_stage.refresh_children()

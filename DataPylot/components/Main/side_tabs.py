@@ -29,9 +29,9 @@ class SideTabs(ttk.Frame):
         )
 
         self.tab_texts = [
-            "Import Dataset", "EDA", "Data Cleaning", 
+            "Import Dataset", "Data Analysis (EDA)", "Data Cleaning", 
             "Feature Engineering", "Model Training", 
-            "Model Evaulation"
+            "Model Evaluation"
         ]
         self.tabs = {}
 
@@ -50,7 +50,7 @@ class SideTabs(ttk.Frame):
             self.tabs[self.selected_tab].configure(
                 style="SideTab.TButton"    
             )
-
+        
         self.selected_tab = tab_txt
         self.tabs[self.selected_tab].configure(
             style="Selected.SideTab.TButton"

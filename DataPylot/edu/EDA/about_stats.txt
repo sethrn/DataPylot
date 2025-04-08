@@ -1,1 +1,21 @@
-Placeholder for about stats step content.
+Once your dataset is loaded into DataPylot, the next step is understanding 
+its basic structure and contents. The Summary Statistics section helps you 
+quickly assess the shape, features, and distributions within your data,
+giving you a strong foundation for further analysis.
+
+Start by selecting a DataFrame from your session. From there, you can choose 
+to view several types of summary information:
+
+Shape: Displays the number of rows and columns in your dataset. This tells you 
+how many records and features you're working with.
+
+Feature Information: Shows the data types, non-null counts, and memory usage 
+for each column. This is helpful for spotting missing values or unexpected types.
+
+Summary Statistics: Returns statistical metrics like mean, standard deviation,
+min/max, and quartiles for each numeric column. This provides a snapshot 
+of data spread.
+
+Value Counts: Displays the frequency of unique values in each column,
+along with the number of unique entries. This is mainly useful for 
+exploring categorical distributions and data imbalance.

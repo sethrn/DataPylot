@@ -7,12 +7,12 @@ class GenerateCodeFrame(ttk.Frame, ABC):
         super().__init__(parent)
 
         self.content_frame = ttk.Frame(self)
-        self.content_frame.pack(fill="both", expand=True)
+        self.content_frame.pack(fill="both", expand=True, pady=0)
 
         self.gen_frame = ttk.Frame(self)
-        self.gen_frame.pack(side="bottom", fill="x", pady=10)
+        self.gen_frame.pack(side="bottom", fill="x", pady=(0,10))
 
-        self.include_import_var = tk.BooleanVar(value=False)
+        self.include_import_var = tk.BooleanVar(value=True)
         self.import_btn = ttk.Checkbutton(
             self.gen_frame,
             text="Include Import Statements",
@@ -31,5 +31,6 @@ class GenerateCodeFrame(ttk.Frame, ABC):
     @abstractmethod
     def generate_code(self, *args, **kwargs):
         raise NotImplementedError("generate_code not implemented")
+        
 
         

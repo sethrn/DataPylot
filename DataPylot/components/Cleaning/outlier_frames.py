@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from pathlib import Path
 import re
 import sys
 import pandas as pd
@@ -25,16 +24,6 @@ class OutlierOperationFrame(ttk.Frame):
 
         self.manager = manager
 
-        if hasattr(sys, '_MEIPASS'):
-            base_dir = Path(sys._MEIPASS)
-        else:
-            base_dir = Path(__file__).resolve().parent.parent.parent
-        
-        about_path = base_dir / "edu" / "Cleaning" / "about_outlier.txt"
-
-        self.winfo_toplevel().SessionData.setAboutStep(str(about_path))
-
-
         self.df_names = self.winfo_toplevel().SessionData.getDFNames()
 
         top_label = ttk.Label(self, text="Select DataFrame and Customize Operation", font=("Arial", 14))
@@ -42,17 +31,17 @@ class OutlierOperationFrame(ttk.Frame):
 
         remove_col_label = ttk.Label(
             self,
-            text="To remove a column with msising values, navigate to the 'Remove Column' Section.",
+            text="To remove a column with outliers, navigate to the 'Remove Column' Section.",
             font=("Arial", 8)
         )
-        remove_col_label.grid(row=1, column=0, padx=5, pady=(15,5), sticky="n")
+        remove_col_label.grid(row=1, column=0, padx=5, pady=(10,5), sticky="n")
 
         select_df_text = ttk.Label(
             self,
             text="Select DataFrame:",
             font=("Arial", 12)
         )
-        select_df_text.grid(row=2, column=0, padx=5, pady=(25,5), sticky="w")
+        select_df_text.grid(row=2, column=0, padx=5, pady=(20,5), sticky="w")
 
         self.df_dropdown = ttk.Combobox(
             self,
@@ -61,7 +50,7 @@ class OutlierOperationFrame(ttk.Frame):
             width=30
         )
 
-        self.df_dropdown.grid(row=2, column=0, padx=(250,5), pady=(25,5), sticky="w")
+        self.df_dropdown.grid(row=2, column=0, padx=(250,5), pady=(20,5), sticky="w")
         self.df_dropdown.bind("<<ComboboxSelected>>", lambda e: self.on_df_selected())
 
 
@@ -70,7 +59,7 @@ class OutlierOperationFrame(ttk.Frame):
             text="Select Operation on Outliers:",
             font=("Arial", 10)
         )
-        select_op_text.grid(row=3, column=0, padx=5, pady=(25,5), sticky="w")
+        select_op_text.grid(row=3, column=0, padx=5, pady=(20,5), sticky="w")
 
         self.op_var = tk.StringVar(value="")
         self.rem_radio = ttk.Radiobutton(
@@ -80,7 +69,7 @@ class OutlierOperationFrame(ttk.Frame):
             value="remove",
             command=self.on_op_selected
             )
-        self.rem_radio.grid(row=3, column=0, padx=(225,5), pady=(25,5), sticky="w")
+        self.rem_radio.grid(row=3, column=0, padx=(375,5), pady=(20,5), sticky="w")
 
         self.cap_radio = ttk.Radiobutton(
             self,
@@ -89,7 +78,7 @@ class OutlierOperationFrame(ttk.Frame):
             value="cap",
             command=self.on_op_selected
             )
-        self.cap_radio.grid(row=3, column=0, padx=(350,5), pady=(25,5), sticky="w")
+        self.cap_radio.grid(row=3, column=0, padx=(200,5), pady=(20,5), sticky="w")
 
         self.grid_columnconfigure(0, weight=1)
         # selecting entire dataset or single feature (remove only)
@@ -141,7 +130,7 @@ class OutlierOperationFrame(ttk.Frame):
                     text="Select How to Apply Operation",
                     font=("Arial", 10)
                 )
-                self.type_text.grid(row=4, column=0, padx=5, pady=(25,5), sticky="w")
+                self.type_text.grid(row=4, column=0, padx=5, pady=(20,5), sticky="w")
 
                 self.single_radio = ttk.Radiobutton(
                     self,
@@ -150,7 +139,7 @@ class OutlierOperationFrame(ttk.Frame):
                     value="single",
                     command=self.on_type_selected
                 )
-                self.single_radio.grid(row=4, column=0, padx=(225,5), pady=(25,5), sticky="w")
+                self.single_radio.grid(row=4, column=0, padx=(225,5), pady=(20,5), sticky="w")
 
                 self.entire_radio = ttk.Radiobutton(
                     self,
@@ -159,16 +148,16 @@ class OutlierOperationFrame(ttk.Frame):
                     value="entire",
                     command=self.on_type_selected
                 )
-                self.entire_radio.grid(row=4, column=0, padx=(350,5), pady=(25,5), sticky="w")
+                self.entire_radio.grid(row=4, column=0, padx=(350,5), pady=(20,5), sticky="w")
             elif self.op_var.get() == "cap":
                 features = [feature for feature in self.df.columns if is_numeric_dtype(self.df[feature])]
 
                 self.feat_text = ttk.Label(
                         self,
-                        text="Select Feature",
-                        font=("Arial", 10)
+                        text="Select Feature:",
+                        font=("Arial", 12)
                 )
-                self.feat_text.grid(row=4, column=0, padx=5, pady=(25,5), sticky="w")
+                self.feat_text.grid(row=4, column=0, padx=5, pady=(20,5), sticky="w")
 
                 self.feat_dropdown = ttk.Combobox(
                     self,
@@ -177,7 +166,7 @@ class OutlierOperationFrame(ttk.Frame):
                     width=30
                 )
                 self.feat_dropdown.bind("<<ComboboxSelected>>", lambda e: self.on_feat_selected())
-                self.feat_dropdown.grid(row=4, column=0, padx=(250,5), pady=(25,5), sticky="w")
+                self.feat_dropdown.grid(row=4, column=0, padx=(250,5), pady=(20,5), sticky="w")
    
     def on_type_selected(self):
         self.destroy_feat()
@@ -192,7 +181,7 @@ class OutlierOperationFrame(ttk.Frame):
                     text="Select Bound(s) to Apply Operation:",
                     font=("Arial", 10)
                 )
-                self.select_bound_text.grid(row=5, column=0, padx=5, pady=(25,5), sticky="w")
+                self.select_bound_text.grid(row=5, column=0, padx=5, pady=(20,5), sticky="w")
 
                 self.upper_radio = ttk.Radiobutton(
                     self,
@@ -201,7 +190,7 @@ class OutlierOperationFrame(ttk.Frame):
                     value="upper",
                     command=lambda: self.on_bound_selected(6)
                 )
-                self.upper_radio.grid(row=5, column=0, padx=(225,5), pady=(25,5), sticky="w")
+                self.upper_radio.grid(row=5, column=0, padx=(225,5), pady=(20,5), sticky="w")
 
                 self.lower_radio = ttk.Radiobutton(
                     self,
@@ -210,7 +199,7 @@ class OutlierOperationFrame(ttk.Frame):
                     value="lower",
                     command=lambda: self.on_bound_selected(6)
                 )
-                self.lower_radio.grid(row=5, column=0, padx=(350,5), pady=(25,5), sticky="w")
+                self.lower_radio.grid(row=5, column=0, padx=(350,5), pady=(20,5), sticky="w")
 
                 self.both_radio = ttk.Radiobutton(
                     self,
@@ -219,17 +208,17 @@ class OutlierOperationFrame(ttk.Frame):
                     value="both",
                     command=lambda: self.on_bound_selected(6)
                 )
-                self.both_radio.grid(row=5, column=0, padx=(475,5), pady=(25,5), sticky="w")
+                self.both_radio.grid(row=5, column=0, padx=(475,5), pady=(20,5), sticky="w")
             
             elif self.type_var.get() == "single":
                 features = [feature for feature in self.df.columns if is_numeric_dtype(self.df[feature])]
 
                 self.feat_text = ttk.Label(
                         self,
-                        text="Select Feature",
-                        font=("Arial", 10)
+                        text="Select Feature:",
+                        font=("Arial", 12)
                 )
-                self.feat_text.grid(row=5, column=0, padx=5, pady=(25,5), sticky="w")
+                self.feat_text.grid(row=5, column=0, padx=5, pady=(20,5), sticky="w")
 
                 self.feat_dropdown = ttk.Combobox(
                     self,
@@ -238,7 +227,7 @@ class OutlierOperationFrame(ttk.Frame):
                     width=30
                 )
                 self.feat_dropdown.bind("<<ComboboxSelected>>", lambda e: self.on_feat_selected())
-                self.feat_dropdown.grid(row=5, column=0, padx=(250,5), pady=(25,5), sticky="w")
+                self.feat_dropdown.grid(row=5, column=0, padx=(250,5), pady=(20,5), sticky="w")
                 
     def on_feat_selected(self):
         self.destroy_bound()
@@ -251,7 +240,7 @@ class OutlierOperationFrame(ttk.Frame):
                 text="Select Bound(s) to Apply Operation:",
                 font=("Arial", 10)
             )
-            self.select_bound_text.grid(row=6, column=0, padx=5, pady=(25,5), sticky="w")
+            self.select_bound_text.grid(row=6, column=0, padx=5, pady=(20,5), sticky="w")
 
             self.upper_radio = ttk.Radiobutton(
                 self,
@@ -260,7 +249,7 @@ class OutlierOperationFrame(ttk.Frame):
                 value="upper",
                 command=lambda: self.on_bound_selected(7)
             )
-            self.upper_radio.grid(row=6, column=0, padx=(225,5), pady=(25,5), sticky="w")
+            self.upper_radio.grid(row=6, column=0, padx=(225,5), pady=(20,5), sticky="w")
 
             self.lower_radio = ttk.Radiobutton(
                 self,
@@ -269,7 +258,7 @@ class OutlierOperationFrame(ttk.Frame):
                 value="lower",
                 command=lambda: self.on_bound_selected(7)
             )
-            self.lower_radio.grid(row=6, column=0, padx=(350,5), pady=(25,5), sticky="w")
+            self.lower_radio.grid(row=6, column=0, padx=(350,5), pady=(20,5), sticky="w")
 
             self.both_radio = ttk.Radiobutton(
                 self,
@@ -278,7 +267,7 @@ class OutlierOperationFrame(ttk.Frame):
                 value="both",
                 command=lambda: self.on_bound_selected(7)
             )
-            self.both_radio.grid(row=6, column=0, padx=(475,5), pady=(25,5), sticky="w")
+            self.both_radio.grid(row=6, column=0, padx=(475,5), pady=(20,5), sticky="w")
 
     def on_bound_selected(self, row):
         self.destroy_tech()
@@ -290,7 +279,7 @@ class OutlierOperationFrame(ttk.Frame):
                 text="Select Technique to Detect Outliers:",
                 font=("Arial", 10)
             )
-            self.tech_text.grid(row=row, column=0, padx=5, pady=(25,5), sticky="w")
+            self.tech_text.grid(row=row, column=0, padx=5, pady=(20,5), sticky="w")
 
             self.tukey_radio = ttk.Radiobutton(
                 self,
@@ -299,7 +288,7 @@ class OutlierOperationFrame(ttk.Frame):
                 value="tukey",
                 command=lambda: self.on_tech_selected(row+1)
             )
-            self.tukey_radio.grid(row=row, column=0, padx=(225,5), pady=(25,5), sticky="w")
+            self.tukey_radio.grid(row=row, column=0, padx=(225,5), pady=(20,5), sticky="w")
 
             self.zscore_radio = ttk.Radiobutton(
                 self,
@@ -308,7 +297,7 @@ class OutlierOperationFrame(ttk.Frame):
                 value="zscore",
                 command=lambda: self.on_tech_selected(row+1)
             )
-            self.zscore_radio.grid(row=row, column=0, padx=(350,5), pady=(25,5), sticky="w")
+            self.zscore_radio.grid(row=row, column=0, padx=(350,5), pady=(20,5), sticky="w")
 
             if self.type_var.get() != "entire":
                 self.custom_radio = ttk.Radiobutton(
@@ -318,7 +307,7 @@ class OutlierOperationFrame(ttk.Frame):
                     value="custom",
                     command=lambda: self.on_tech_selected(row+1)
                 )
-                self.custom_radio.grid(row=row, column=0, padx=(475,5), pady=(25,5), sticky="w")
+                self.custom_radio.grid(row=row, column=0, padx=(475,5), pady=(20,5), sticky="w")
 
     
     def on_tech_selected(self, row):
@@ -355,7 +344,7 @@ class OutlierOperationFrame(ttk.Frame):
                     )
                     self.parameter2_entry = ttk.Entry(self, width=8)
                     self.parameter2_entry.bind("<KeyRelease>", lambda e: self.validate_param())
-                    self.parameter2_entry.grid(row=row, column=0, padx=(350, 5), pady=(25,5), sticky="w")
+                    self.parameter2_entry.grid(row=row, column=0, padx=(350, 5), pady=(20,5), sticky="w")
                 else:
                     self.parameter_text = ttk.Label(
                     self, 
@@ -366,7 +355,7 @@ class OutlierOperationFrame(ttk.Frame):
                 xpad_param = 225
                 xpad_err = 425
 
-            self.parameter_text.grid(row=row, column=0, padx=5, pady=(25,5), sticky="w")
+            self.parameter_text.grid(row=row, column=0, padx=5, pady=(20,5), sticky="w")
 
             self.parameter_entry = ttk.Entry(
                 self, 
@@ -374,14 +363,14 @@ class OutlierOperationFrame(ttk.Frame):
             )
             self.parameter_entry.insert(0, default_param)
             self.parameter_entry.bind("<KeyRelease>", lambda e: self.validate_param())
-            self.parameter_entry.grid(row=row, column=0, padx=(xpad_param, 5), pady=(25,5), sticky="w")
+            self.parameter_entry.grid(row=row, column=0, padx=(xpad_param, 5), pady=(20,5), sticky="w")
 
             self.param_err = ttk.Label(
                 self,
                 text="",
                 font=("Arial", 10)
             )
-            self.param_err.grid(row=row, column=0, padx=(xpad_err,5), pady=(25,5), sticky="w")
+            self.param_err.grid(row=row, column=0, padx=(xpad_err,5), pady=(20,5), sticky="w")
 
             if self.tech_var.get() != "custom":
                 self.capture_state()
@@ -432,15 +421,6 @@ class OutlierOperationFrame(ttk.Frame):
         self.manager.params['param2'] = (
             self.parameter2_entry.get().strip() if self.parameter2_entry and self.bound_var.get() == "both" else None
         )
-
-    def reset_inputs(self):
-        self.destroy_type()
-        self.destroy_feat()
-        self.destroy_bound()
-        self.destroy_tech()
-        self.destroy_param()
-
-        self.df = None
 
     def destroy_type(self):
         if self.type_text:

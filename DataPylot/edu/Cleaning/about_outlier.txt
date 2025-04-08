@@ -1,1 +1,28 @@
-Handle Outliers
+Outliers are data points that deviate significantly from most of the other 
+data points feature. While not always errors, they can distort statistical 
+summaries and negatively impact the performance of machine learning models.
+There are two strategies for handling outliers, Winsorization and removing
+rows/instances.
+
+Winsorization modifies the dataset by 'capping' outlier values past a defined 
+boundary, replacing their value with this capped value. This is useful when
+you want to keep the value, but not allow it to skew the behavior of a model.
+You can apply this cap to lower bounds, upper bounds, or both.
+With DataPylot, you can only apply Winsorization to numeric values.
+
+Removing outlier rows is the other option, and this is helpful when outliers
+represent noise or errors, or there are enough data points left over.
+In DataPylot, you can apply outlier removal feature-by-feature or to the
+entire dataset (where any row with an outlier is dropped)
+
+Regardless of how you choose to handle them, you’ll first need to detect 
+outliers. DataPylot provides multiple detection methods, also available in
+the Detect Outliers window in the EDA section:
+
+Tukey’s Fence: Uses the interquartile range (IQR) to define acceptable bounds. 
+This is used for skewed or non-normal distributions.
+Z-score: Flags values that are a set number of standard deviations away from 
+the mean. this is better suited for normally distributed data.
+
+Custom Threshold: Set your own upper and/or lower bounds manually for full 
+control.
