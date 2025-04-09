@@ -11,7 +11,7 @@ class CorrelationFrame(GenerateCodeFrame):
 
         self.df_names = self.winfo_toplevel().SessionData.getDFNames()
 
-        top_label = ttk.Label(self.content_frame, text="Select DataFrame and Technique", font=("Arial", 14))
+        top_label = ttk.Label(self.content_frame, text="Detect Correlations", font=("Arial", 14))
         top_label.grid(row=0, column=0, columnspan=2, padx=5, pady=(20, 5), sticky="n")
 
         select_df_text = ttk.Label(

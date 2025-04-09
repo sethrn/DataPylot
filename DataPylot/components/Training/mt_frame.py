@@ -46,7 +46,7 @@ class ModelFrame(ttk.Frame):
         self.all_feats = tk.BooleanVar(value=False)
 
         top_label = ttk.Label(
-            self, text="Select DataFrame, Target and Input Features, and Model",
+            self, text="Train a Model",
             font=("Arial", 14))
         top_label.grid(row=0, column=0, padx=5, pady=(20,5), sticky="n")
 
@@ -59,7 +59,7 @@ class ModelFrame(ttk.Frame):
         self.df_dropdown.bind("<<ComboboxSelected>>", lambda e: self.on_df_selected())
 
         # Select Regression or Classification
-        select_type_text = ttk.Label(self, text="Select Type of Model:", font=("Arial", 12))
+        select_type_text = ttk.Label(self, text="Select Task Type:", font=("Arial", 12))
         select_type_text.grid(row=2, column=0, padx=5, pady=(15, 5), sticky="w")
 
         self.class_radio = ttk.Radiobutton(self, text="Classifiation", variable=self.type_var, 
@@ -92,7 +92,7 @@ class ModelFrame(ttk.Frame):
 
         instruction_label = ttk.Label(
             self,
-            text="Hold Ctrl key to select multiple features or Shift key to select a range of features.",
+            text="Hold Ctlrl key and Click to select multiple features at once or Hold Shift key and Click to select a range of features",
             font=("Arial", 8)
         )
         instruction_label.grid(row=6, column=0, padx=5, pady=(5, 5), sticky="n")

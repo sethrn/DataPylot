@@ -36,8 +36,8 @@ class PlotTypeFrame(ttk.Frame):
         self.manager = manager
         self.manager.params["class"] = "uni"
         self.df_names = self.winfo_toplevel().SessionData.getDFNames()
-
-        top_label = ttk.Label(self, text="Select DataFrame, Analysis, and Plot Type", font=("Arial", 14))
+        
+        top_label = ttk.Label(self, text="Generate a Visualization", font=("Arial", 14))
         top_label.grid(row=0, column=0, columnspan=2, padx=5, pady=(20, 5), sticky="n")
 
         select_df_text = ttk.Label(

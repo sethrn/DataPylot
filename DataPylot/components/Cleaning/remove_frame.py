@@ -16,7 +16,7 @@ class RemoveFeatureFrame(GenerateCodeFrame):
 
         top_label = ttk.Label(
             self.content_frame,
-            text="Select DataFrame and Features to Remove",
+            text="Remove Features",
             font=("Arial", 14)
         )
         top_label.grid(row=0, column=0, padx=5, pady=(20,5), sticky="n")
@@ -55,7 +55,7 @@ class RemoveFeatureFrame(GenerateCodeFrame):
 
         instruction_label = ttk.Label(
             self.content_frame,
-            text="Hold Ctrl key to select multiple features or Shift key to select a range of features.",
+            text="Hold Ctlrl key and Click to select multiple features at once or Hold Shift key and Click to select a range of features",
             font=("Arial", 8)
         )
         instruction_label.grid(row=3, column=0, padx=5, pady=(5, 10), sticky="n")

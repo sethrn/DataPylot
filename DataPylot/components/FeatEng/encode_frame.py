@@ -44,7 +44,7 @@ class EncodeFeatureFrame(ttk.Frame):
         self.df_names = self.winfo_toplevel().SessionData.getDFNames()
 
         top_label = ttk.Label(
-            self, text="Select DataFrame, Feature, and Encoding Method",
+            self, text="Encode a Feature",
             font=("Arial", 14)
         )
         top_label.grid(row=0, column=0, padx=5, pady=(20, 5), sticky="n")

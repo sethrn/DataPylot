@@ -16,7 +16,7 @@ class InteractionFrame(GenerateCodeFrame):
         self.save_df_var = tk.StringVar(value="")
         self.df_names = self.winfo_toplevel().SessionData.getDFNames()
 
-        top_label = ttk.Label(self.content_frame, text="Select DataFrame, Interaction Terms, and Saving Options", font=("Arial", 14))
+        top_label = ttk.Label(self.content_frame, text="Create an Interaction Term", font=("Arial", 14))
         top_label.grid(row=0, column=0, padx=5, pady=(20,5), sticky="n")
 
         select_df_text = ttk.Label(self.content_frame, text="Select DataFrame:", font=("Arial", 12))

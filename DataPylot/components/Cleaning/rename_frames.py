@@ -31,7 +31,7 @@ class RenameValueFrame(ttk.Frame):
 
         top_label = ttk.Label(
             self,
-            text="Select DataFrame, Feature, and Values to Rename",
+            text="Rename Feature Values",
             font=("Arial", 14)
         )
         top_label.grid(row=0, column=0, padx=5, pady=(20, 5), sticky="n")

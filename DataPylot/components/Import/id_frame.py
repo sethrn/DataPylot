@@ -14,7 +14,7 @@ class IDFrame(GenerateCodeFrame):
         self.file_path = ""
         self.colab_mode = tk.BooleanVar(value=False)
 
-        top_label = ttk.Label(self.content_frame, text="Import A Dataset", font=("Arial", 14))
+        top_label = ttk.Label(self.content_frame, text="Import a Dataset", font=("Arial", 14))
         top_label.grid(row=0, column=0, padx=10, pady=(20, 5), sticky="n")
 
         self.dnd_frame = DnDFrame(self.content_frame, id_frame_ref=self)

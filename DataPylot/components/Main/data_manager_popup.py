@@ -38,29 +38,29 @@ class DataFrameManagerPopup(tk.Toplevel):
             widget.destroy()
 
         for i, df_name in enumerate(self.session.getDFNames()):
-            label = ttk.Label(self.frame_container, text=df_name)
-            label.grid(row=i, column=0, padx=(35,0), pady=5, sticky="w")
+            label = ttk.Label(self.frame_container, text=df_name, font=("Arial", 8))
+            label.grid(row=i, column=0, padx=(30,0), pady=5, sticky="w")
 
             rename_btn = ttk.Button(
                 self.frame_container,
                 text="Rename",
                 command=lambda n=df_name: self.rename_dataframe(n)
             )
-            rename_btn.grid(row=i, column=0, padx=(100,0), pady=5, sticky="w")
+            rename_btn.grid(row=i, column=0, padx=(200,0), pady=5, sticky="w")
 
             delete_btn = ttk.Button(
                 self.frame_container,
                 text="Delete",
                 command=lambda n=df_name: self.delete_dataframe(n)
             )
-            delete_btn.grid(row=i, column=0, padx=(350,0), pady=5, sticky="w")
+            delete_btn.grid(row=i, column=0, padx=(400,0), pady=5, sticky="w")
 
             download_btn = ttk.Button(
                 self.frame_container,
                 text="Download",
                 command=lambda n=df_name: self.download_dataframe(n)
             )
-            download_btn.grid(row=i, column=0, padx=(175,0), pady=5, sticky="w")
+            download_btn.grid(row=i, column=0, padx=(275,0), pady=5, sticky="w")
 
     def rename_dataframe(self, old_name):
         row_index = self.session.getDFNames().index(old_name)

@@ -12,7 +12,7 @@ class OutlierFrame(GenerateCodeFrame):
 
         top_label = ttk.Label(
             self.content_frame, 
-            text="Select DataFrame, Technique, and Parameter",
+            text="Detect Outliers",
             font=("Arial", 14)
         )
         top_label.grid(row=0, column=0, padx=5, pady=(20,5), sticky="n")
@@ -79,7 +79,7 @@ class OutlierFrame(GenerateCodeFrame):
             self.parameter_entry.destroy()
         if self.param_err:
             self.param_err.destroy()
-        self.tech_var.set("")
+        self.technique_var.set("")
 
         if self.data_type_var.get() == "numerical":
             self.tech_text = ttk.Label(
@@ -108,6 +108,7 @@ class OutlierFrame(GenerateCodeFrame):
                 self.tukey_radio.destroy()
             if self.zscore_radio:
                 self.zscore_radio.destroy()
+            self.technique_var.set("")
 
             self.parameter_label = ttk.Label(
                 self.content_frame,

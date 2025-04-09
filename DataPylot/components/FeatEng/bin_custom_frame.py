@@ -68,7 +68,7 @@ class BinCustomFrame(ttk.Frame):
 
         instruction_label = ttk.Label(
             self,
-            text="Hold Ctrl key to select multiple features or Shift key to select a range of features.",
+            text="Hold Ctlrl key and Click to select multiple features at once or Hold Shift key and Click to select a range of features",
             font=("Arial", 8)
         )
         instruction_label.grid(row=5, column=0, padx=(100,5), pady=(5, 5), sticky="w")

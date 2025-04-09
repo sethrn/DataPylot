@@ -38,7 +38,7 @@ class ScaleOperationFrame(ttk.Frame):
 
         top_label = ttk.Label(
             self,
-            text="Select DataFrame and Scaling Method",
+            text="Scale Numeric Features",
             font=("Arial",14)
         )
         top_label.grid(row=0, column=0, padx=5,pady=(20,5),sticky="n")
@@ -79,7 +79,7 @@ class ScaleOperationFrame(ttk.Frame):
 
         instruction_label = ttk.Label(
             self,
-            text="Hold Ctrl key to select multiple features or Shift key to select a range of features.",
+            text="Hold Ctlrl key and Click to select multiple features at once or Hold Shift key and Click to select a range of features",
             font=("Arial", 8)
         )
         instruction_label.grid(row=4, column=0, padx=5, pady=(5, 5), sticky="ns")

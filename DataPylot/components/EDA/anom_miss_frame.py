@@ -9,7 +9,7 @@ class MissingFrame(GenerateCodeFrame):
 
         top_label = ttk.Label(
             self.content_frame, 
-            text="Select DataFrame to Analyze Missing Values", 
+            text="Detect Missing Values", 
             font=("Arial", 14)
         )
         top_label.grid(row=0, column=0, padx=5, pady=(20,5), sticky="n")

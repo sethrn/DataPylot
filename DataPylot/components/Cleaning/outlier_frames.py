@@ -26,7 +26,7 @@ class OutlierOperationFrame(ttk.Frame):
 
         self.df_names = self.winfo_toplevel().SessionData.getDFNames()
 
-        top_label = ttk.Label(self, text="Select DataFrame and Customize Operation", font=("Arial", 14))
+        top_label = ttk.Label(self, text="Address Outliers", font=("Arial", 14))
         top_label.grid(row=0, column=0, padx=5, pady=(20, 5), sticky="n")
 
         remove_col_label = ttk.Label(
@@ -113,7 +113,7 @@ class OutlierOperationFrame(ttk.Frame):
         self.destroy_bound()
         self.destroy_tech()
         self.destroy_param()
-
+        self.op_var.set("")
         self.df = self.winfo_toplevel().SessionData.getDataFrame(self.df_dropdown.get())
 
     def on_op_selected(self):

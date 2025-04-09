@@ -27,7 +27,7 @@ class UnivariatePlotGenerator:
 
             case "Box Plot":
                 code += (
-                    f"sns.boxplot(data={df}, y='{params['Y Axis']}'"
+                    f"sns.boxplot(data={df}, x='{params['Y Axis']}'"
                 )
                 if params.get("Color"):
                     code += f", color='{params['Color']}'"

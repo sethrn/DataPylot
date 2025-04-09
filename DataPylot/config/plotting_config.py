@@ -39,7 +39,7 @@ UNIVARIATE_CONFIG = {
         "library": "seaborn",
         "import": "import seaborn as sns",
         "options": [
-            {"label": "Y Axis", "entry": "dropdown", "entry_type": "numeric", "required": True, "default": None},
+            {"label": "X Axis", "entry": "dropdown", "entry_type": "numeric", "required": True, "default": None},
             {"label": "Plot Title", "entry": "text", "entry_type": "str", "required": False, "default": ""},
             {"label": "Y Axis Label", "entry": "text", "entry_type": "str", "required": False, "default": ""},
             {"label": "Color", "entry": "dropdown", "entry_type": COLORS, "required": False, "default": None},
@@ -232,10 +232,10 @@ MULTIVARIATE_CONFIG = {
             {"label": "Y Axis", "entry": "dropdown", "entry_type": "numeric", "required": True, "default": None},
             {"label": "Hue", "entry": "dropdown", "entry_type": "any", "required": True, "default": None},
             {"label": "Plot Title", "entry": "text", "entry_type": "str", "required": False, "default": ""},
+            {"label": "Palette", "entry": "dropdown", "entry_type": COLOR_PALETTES, "required": False, "default": None},
             {"label": "Marker Style", "entry": "dropdown", "entry_type": MARKERS, "required": False, "default": "o"},
             {"label": "Line Style", "entry": "dropdown", "entry_type": LINE_STYLES, "required": False, "default": "-"},
             {"label": "Plot Style", "entry": "dropdown", "entry_type": STYLES, "required": False, "default": None},
-            {"label": "Grid Lines", "entry": "checkbox", "entry_type": "bool", "required": False, "default": False},
             {"label": "Show Legend", "entry": "checkbox", "entry_type": "bool", "required": False, "default": True}
         ]
     },

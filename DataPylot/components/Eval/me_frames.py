@@ -21,7 +21,7 @@ class MetricsFrame(GenerateCodeFrame):
 
         self.model_names = self.winfo_toplevel().SessionData.getModels()
 
-        top_label = ttk.Label(self.content_frame, text="Select Model and Performance Metrics", font=("Arial", 12))
+        top_label = ttk.Label(self.content_frame, text="Generate Performance Metrics", font=("Arial", 14))
         top_label.grid(row=0, column=0, padx=5, pady=(20, 5), sticky="n")
 
         self.model_label = ttk.Label(self.content_frame, text="Select Model:", font=("Arial", 12))
@@ -94,7 +94,7 @@ class VisualsFrame(GenerateCodeFrame):
 
         self.model_names = self.winfo_toplevel().SessionData.getModels()
 
-        top_label = ttk.Label(self.content_frame, text="Select Model and Performance Visualization", font=("Arial", 12))
+        top_label = ttk.Label(self.content_frame, text="Generate a Performance Visualization", font=("Arial", 14))
         top_label.grid(row=0, column=0, padx=5, pady=(20,5), sticky="n")
 
         self.model_label = ttk.Label(self.content_frame, text="Select Model:", font=("Arial", 12))

@@ -12,8 +12,8 @@ class EDATabFrame(OperationTabFrame):
     def __init__(self, parent):
         super().__init__(parent)
 
-        self.add_tab(PlotFrames, "Visualizations")
         self.add_tab(StatsFrame, "Summary Statistics")
+        self.add_tab(PlotFrames, "Visualizations")
         self.add_tab(MissingFrame, "Detect Missing Values")
         self.add_tab(OutlierFrame, "Detect Outliers")
         self.add_tab(CorrelationFrame, "Detect Correlations")

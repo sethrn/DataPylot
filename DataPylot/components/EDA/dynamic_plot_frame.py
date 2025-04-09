@@ -50,7 +50,7 @@ class DynamicPlotFrame(GenerateCodeFrame):
             text=f"Customize {self.plot_type} for {self.df_name}",
             font=("Arial", 14)
         )
-        top_label.grid(row=0, column=0, padx=5, pady=(20, 5), sticky="n")
+        top_label.grid(row=0, column=0, padx=5, pady=(20, 10), sticky="n")
 
         for i, option in enumerate(self.options):
             req_or_type_text = ""
@@ -64,7 +64,7 @@ class DynamicPlotFrame(GenerateCodeFrame):
                 text=f"{option.get('label')} {req_or_type_text}",
                 font=("Arial", 10)
             )
-            option_label.grid(row=i + 1, column=0, padx=5, pady=(10, 5), sticky="w")
+            option_label.grid(row=i + 1, column=0, padx=5, pady=(5, 5), sticky="w")
 
             entry_type = option.get("entry_type")
             entry_kind = option.get("entry")
@@ -82,28 +82,28 @@ class DynamicPlotFrame(GenerateCodeFrame):
                     cb["values"] = entry_type
 
                 cb.bind("<<ComboboxSelected>>", lambda e: self.validate_required_inputs())
-                cb.grid(row=i + 1, column=0, padx=(200, 5), pady=(10, 5), sticky="w")
+                cb.grid(row=i + 1, column=0, padx=(200, 5), pady=(5, 5), sticky="w")
                 self.widgets.append(cb)
                 self.widget_vars.append(cb)
 
             elif entry_kind == "checkbox":
                 var = tk.BooleanVar(value=default)
                 cb = ttk.Checkbutton(self.content_frame, text="enabled", variable=var, command=self.validate_required_inputs)
-                cb.grid(row=i + 1, column=0, padx=(200, 5), pady=(10, 5), sticky="w")
+                cb.grid(row=i + 1, column=0, padx=(200, 5), pady=(5, 5), sticky="w")
                 self.widgets.append(cb)
                 self.widget_vars.append(var)
 
             elif entry_kind == "entry":
                 var = tk.StringVar(value=str(default) if default is not None else "")
                 entry = ttk.Entry(self.content_frame, textvariable=var)
-                entry.grid(row=i + 1, column=0, padx=(200, 5), pady=(10, 5), sticky="w")
+                entry.grid(row=i + 1, column=0, padx=(200, 5), pady=(5, 5), sticky="w")
                 self.widgets.append(entry)
                 self.widget_vars.append(var)
 
             elif entry_kind == "text":
                 var = tk.StringVar(value=default or "")
                 entry = ttk.Entry(self.content_frame, textvariable=var, width=50)
-                entry.grid(row=i + 1, column=0, padx=(200, 5), pady=(10, 5), sticky="w")
+                entry.grid(row=i + 1, column=0, padx=(200, 5), pady=(5, 5), sticky="w")
                 self.widgets.append(entry)
                 self.widget_vars.append(var)
 
@@ -113,7 +113,7 @@ class DynamicPlotFrame(GenerateCodeFrame):
             foreground="red",
             font=("Arial", 9)
         )
-        self.err_label.grid(row=len(self.options)+1, column=0, pady=(10, 5), sticky="s")
+        self.err_label.grid(row=len(self.options)+1, column=0, pady=(5, 5), sticky="s")
 
         self.content_frame.grid_columnconfigure(0, weight=1)
         self.generate_btn.config(state=("disabled" if self.required_op_idx else "normal"))
