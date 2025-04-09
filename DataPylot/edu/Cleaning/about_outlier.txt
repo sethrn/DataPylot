@@ -15,11 +15,11 @@ represent noise or errors, or there are enough data points left over.
 In DataPylot, you can apply outlier removal feature-by-feature or to the
 entire dataset (where any row with an outlier is dropped)
 
-Regardless of how you choose to handle them, you’ll first need to detect 
+Regardless of how you choose to handle them, you'll first need to detect 
 outliers. DataPylot provides multiple detection methods, also available in
 the Detect Outliers window in the EDA section:
 
-Tukey’s Fence: Uses the interquartile range (IQR) to define acceptable bounds. 
+Tukey's Fence: Uses the interquartile range (IQR) to define acceptable bounds. 
 This is used for skewed or non-normal distributions.
 Z-score: Flags values that are a set number of standard deviations away from 
 the mean. this is better suited for normally distributed data.

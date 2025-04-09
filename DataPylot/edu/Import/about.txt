@@ -9,7 +9,7 @@ supported file (.csv, .tsv, .txt, .xlsx, or .json) from your device. If
 you're working in Google Colab, there's an alternative option to mount and 
 access your drive, so you can work with files stored in your Google account.
 
-Before finalizing your import, you’ll give your DataFrame a custom name. 
+Before finalizing your import, you'll give your DataFrame a custom name. 
 Once imported, your dataset becomes available to all other stages of 
 the workflow, unlocking exploration, cleaning, modeling, and more.
 For the rest of the session, you'll access your DataFrames by name, and 

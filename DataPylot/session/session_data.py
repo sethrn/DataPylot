@@ -145,6 +145,6 @@ class SessionData():
 
         about_path = base_dir / "edu" / self.current_aboutStep
 
-        return str(about_path)
+        return about_path
 
 

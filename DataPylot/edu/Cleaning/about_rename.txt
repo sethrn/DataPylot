@@ -4,7 +4,7 @@ representing the same category, or it might contain incorrect entries
 that need to be fixed before meaningful analysis or modeling can occur. 
 The Rename Feature Values section helps address these inconsistencies.
 
-In this window, you’ll begin by selecting a column from your DataFrame. 
+In this window, you'll begin by selecting a column from your DataFrame. 
 Then, you can pick one or more existing values and specify a new name 
 that should replace them. This change is then applied to the selected 
 column in a copy of your dataset, with the updated value(s) reflected 

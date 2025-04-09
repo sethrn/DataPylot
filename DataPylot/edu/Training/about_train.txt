@@ -8,16 +8,16 @@ will allow you to choose from only the models compatible with
 that type of prediction.
 
 Classification models are used when the target is categorical 
-(e.g., predicting a label like “spam” or “not spam”), while 
+(e.g., predicting a label like 'spam' or 'not spam'), while 
 regression models are used when the target is numeric 
 (e.g., predicting house prices).
 
-You’ll also select which features to use as input. 
+You'll also select which features to use as input. 
 These should be informative columns that contribute to predicting the target. 
 Avoid including features that leak the answer or are too closely correlated 
 with the target itself.
 
-Before training, it’s standard practice to split your dataset into a
+Before training, it's standard practice to split your dataset into a
 training set and a test set. The training set is used to fit the model,
 while the test set is used to evaluate how well the model performs on 
 unseen data. A common split is 80% training and 20% testing, but this 
@@ -28,7 +28,7 @@ If you want a more robust evaluation, you can enable cross-validation,
 which trains and evaluates the model across multiple different train-test 
 splits. This helps you get a better estimate of how adequate a model will
 perform in your task, andreduces the risk of overfitting. In DataPylot, 
-this is done through k-fold stratified cross-validation — a technique that 
+this is done through k-fold stratified cross-validation, a technique that 
 preserves the distribution of the target class across all folds, especially 
 useful for imbalanced classification problems.
 

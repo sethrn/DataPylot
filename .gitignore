@@ -12,3 +12,11 @@
 
 # (Optional) Ignore macOS Finder metadata files
 .DS_Store
+
+# Ignore pyinstaller build files
+build/
+dist/
+*.spec
+
+# Ignore venv (linux)
+venv/

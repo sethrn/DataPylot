@@ -55,7 +55,7 @@ class FeatureTabs(ttk.Frame):
         )
         about_filepath = self.app.SessionData.getAboutStep()
         try:
-            with open(about_filepath, "r") as file:
+            with about_filepath.open(encoding="utf-8", errors="replace") as file:
                 content = file.read()
         except FileNotFoundError:
             content = "Information not available for this step."

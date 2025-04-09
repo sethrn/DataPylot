@@ -4,10 +4,10 @@ summaries and negatively impact the performance of machine learning models.
 Identifying outliers helps you better understand your data and decide whether 
 those points should be removed, corrected, or treated differently.
 
-In this step, you’ll choose the type of data to analyze: numerical or categorical. 
-For numerical data, you can use either Tukey’s Fence or Z-score methods. 
+In this step, you'll choose the type of data to analyze: numerical or categorical. 
+For numerical data, you can use either Tukey's Fence or Z-score methods. 
 
-Tukey’s Fence identifies outliers as values that fall a certain multiplier 
+Tukey's Fence identifies outliers as values that fall a certain multiplier 
 beyond the interquartile range (IQR). 
 
 Z-score calculates how many standard deviations a value lies from the mean, 

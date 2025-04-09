@@ -22,6 +22,6 @@ and can be helpful for moderately skewed data, especially when your values
 are non-negative.
 
 You can apply any of these techniques to multiple features at once. 
-Scaling doesn’t change the relationships between features, but it can make 
+Scaling doesn't change the relationships between features, but it can make 
 those relationships easier for a model to understand when it has to account 
 for all of the features at once.

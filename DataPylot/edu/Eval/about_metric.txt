@@ -1,5 +1,5 @@
 After training a model, the next step is to evaluate how well it performs.
-In this section, you’ll select one of your previously trained models and 
+In this section, youll select one of your previously trained models and 
 assess its performance using metrics suited to either regression or 
 classification tasks.
 
@@ -15,12 +15,12 @@ Mean Squared Error (MSE) takes the average of squared differences between
 predictions and actual values, penalizing larger errors more heavily than MAE.
 
 Median Absolute Error measures the median of all absolute differences between 
-predicted and actual values. It’s more robust to outliers than MAE and MSE, 
-offering a clearer picture when your data contains extreme values.
+predicted and actual values. It's more robust to outliers than MAE and MSE, 
+offering a clearer picture when our data contains extreme values.
 
-For classification models, you’ll choose between simple and detailed reporting:
+For classification models, you'll choose between simple and detailed reporting:
 Accuracy measures the proportion of correct predictions out of all predictions.
-It’s easy to interpret but can be misleading for imbalanced datasets.
+It's easy to interpret but can be misleading for imbalanced datasets.
 
 Classification Report provides a full breakdown of precision, recall, and 
 F1-score for each class. These metrics help you understand not just how many 

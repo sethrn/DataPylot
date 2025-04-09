@@ -18,7 +18,7 @@ features with high-cardinality (many different possible values).
 
 For full control, custom encoding allows you to manually assign numeric values 
 to each category. This is helpful when you know the relative importance or 
-relationship between categories that standard encoders can’t capture. 
+relationship between categories that standard encoders can't capture. 
 You can also use this to apply a custom Ordinal encoding.
 
 You can apply encoding to any feature, whether it's currently categorical 

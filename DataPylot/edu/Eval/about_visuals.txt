@@ -14,18 +14,18 @@ between predicted and actual values. Residuals can highlight patterns that
 suggest issues with the model, such as heteroscedasticity or non-linearity. 
 (Note: residual plots are not supported for SVR or KNN models)
 
-If you’re working with tree-based models, you'll have access to two unique 
+If you're working with tree-based models, you'll have access to two unique 
 options: Feature Importance and Tree Visualization. 
 Feature importance helps you understand which variables had the 
 greatest impact on the model's decisions. 
-Tree visualizations provide a simplified diagram of the model’s internal 
+Tree visualizations provide a simplified diagram of the model's internal 
 decision process, which can be helpful for understanding logic and debugging.
 
 For classification models, you can generate a Confusion Matrix, a grid that 
 shows how often your model correctly or incorrectly predicted each class. 
-It’s a quick way to identify whether your model struggles with any specific 
+It's a quick way to identify whether your model struggles with any specific 
 category. 
-If you’re using Logistic Regression or Support Vector Classification (SVC), 
+If you're using Logistic Regression or Support Vector Classification (SVC), 
 you can also generate a ROC Curve, a plot that shows the trade-off between 
 true positive rate and false positive rate at various thresholds, which is 
 especially useful in evaluating binary classifiers.

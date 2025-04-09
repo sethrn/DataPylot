@@ -14,7 +14,7 @@ explicitly included.
 When creating interaction terms, it's important to consider how correlated 
 the original features are. If two features are highly correlated, their 
 interaction term may not add much new information and could introduce 
-redundancy or multicollinearity. In general, it’s a good idea to retain 
+redundancy or multicollinearity. In general, it's a good idea to retain 
 the original features alongside their interaction terms during feature 
 engineering, then assess their combined value during model training or 
 feature selection. This lets the model decide which signals are most 

@@ -21,7 +21,7 @@ ABOUT_TAB_PATHS = {
     "Feature Engineering": "FeatEng/about_scale.txt", 
     "Scale Numeric Feature": "FeatEng/about_scale.txt", 
     "Encode Feature": "FeatEng/about_encode.txt",
-    "Bin Feature": "FeatEng/about_bin.txt",
+    "Bin Numeric Feature": "FeatEng/about_bin.txt",
     "Create Interaction Term": "FeatEng/about_interact.txt",
 
     # Training

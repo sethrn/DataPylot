@@ -13,7 +13,7 @@ median, or mode (most frequent value):
 Use the mean when your data is symmetrically distributed and not 
 heavily affected by outliers.
 Use the median when your data is skewed or contains outliers, since 
-it’s more robust to extreme values.
+it's more robust to extreme values.
 Use the mode if your feature has repeated values or is discrete with 
 clear common entries.
 
