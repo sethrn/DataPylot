@@ -19,8 +19,8 @@ class ModelGenerator:
         hyperparams = params["hyperparams"]
     
         # Feature/target split
-        input_feat_str = "', '".join(inputs)
-        code_lines.append(f"X_{model_name} = {df}[[{', '.join([f'\"{col}\"' for col in inputs])}]]")
+        quoted_inputs = ", ".join([f'"{col}"' for col in inputs])
+        code_lines.append(f"X_{model_name} = {df}[[{quoted_inputs}]]")
         code_lines.append(f"y_{model_name} = {df}['{target}']")
         code_lines.append("")
 

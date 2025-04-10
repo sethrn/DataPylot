@@ -68,7 +68,7 @@ class HyperFrame(GenerateCodeFrame):
                 try:
                     info["type"](raw)
                 except ValueError:
-                    self.err_label.config(text=f"Invalid value for '{name}'. Expected {info["type"].__name__}")
+                    self.err_label.config(text=f"Invalid value for '{name}'. Expected {info['type'].__name__}")
                     return False
 
         model_name = self.model_name_entry.get().strip().lower()

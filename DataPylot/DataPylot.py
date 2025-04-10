@@ -19,9 +19,9 @@ class Application(tk.Tk):
             icon_img = tk.PhotoImage(file=str(icon_path))
             self.iconphoto(True, icon_img)
         except Exception as e:
-            print(f".ico file failure")
+            print(f"icon file failure")
 
-        self.geometry("850x1000")
+        self.geometry("850x800")
 
         self.main_pane = tk.PanedWindow(
             self, 
@@ -60,7 +60,7 @@ class Application(tk.Tk):
         self.bottom_pane.add(self.feature_tabs, minsize=150)
         self.bottom_pane.add(self.code_window, minsize=400)
 
-        self.main_pane.add(self.top_pane, minsize=550)
+        self.main_pane.add(self.top_pane, minsize=500)
         self.main_pane.add(self.bottom_pane, minsize=150)
 
         self.SessionData = SessionData(self)

@@ -27,17 +27,17 @@ class IDFrame(GenerateCodeFrame):
         name_label.grid(row=3, column=0, padx=5, pady=5, sticky="nw")
 
         self.name_entry = ttk.Entry(self.content_frame, width=30)
-        self.name_entry.grid(row=3, column=0, padx=(140, 5), pady=5, sticky="nw")
+        self.name_entry.grid(row=3, column=0, padx=(175, 5), pady=5, sticky="nw")
 
         rows_label = ttk.Label(self.content_frame, text="Display first")
         rows_label.grid(row=4, column=0, padx=(5, 5), pady=5, sticky="nw")
 
         self.rows_entry = ttk.Entry(self.content_frame, width=5)
         self.rows_entry.insert(0, "5")
-        self.rows_entry.grid(row=4, column=0, padx=(70, 5), pady=5, sticky="nw")
+        self.rows_entry.grid(row=4, column=0, padx=(80, 5), pady=5, sticky="nw")
 
         rows_suffix_label = ttk.Label(self.content_frame, text="rows")
-        rows_suffix_label.grid(row=4, column=0, padx=(105, 5), pady=5, sticky="nw")
+        rows_suffix_label.grid(row=4, column=0, padx=(130, 5), pady=5, sticky="nw")
 
         self.colab_checkbox = ttk.Checkbutton(
             self.content_frame,

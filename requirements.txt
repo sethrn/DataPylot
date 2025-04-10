@@ -1,4 +1,7 @@
 category_encoders==2.6.4
-numpy==2.2.4
-pandas==2.2.3
-scikit_learn==1.6.1
+numpy==1.23.5
+scipy==1.8.1
+scikit-learn==1.2.2
+matplotlib
+pandas
+tk

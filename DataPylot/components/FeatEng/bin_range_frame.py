@@ -440,7 +440,7 @@ class SaveBinRangeFrame(GenerateCodeFrame):
                 self.err_label.config(text="Invalid Column Name")
                 return False
             if col in set(self.winfo_toplevel().SessionData.getDataFrame(self.params["df"]).columns):
-                if not self.open_overwrite_popup(f"column within DataFrame {self.params["df"]}", col):
+                if not self.open_overwrite_popup(f"column within DataFrame {self.params['df']}", col):
                     return False
         return True
 

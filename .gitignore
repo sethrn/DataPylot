@@ -20,3 +20,6 @@ dist/
 
 # Ignore venv (linux)
 venv/
+
+# Ignore venv (macOS)
+build-env/
