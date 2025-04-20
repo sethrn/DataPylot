@@ -27,19 +27,19 @@ class EncodeCustomFrame(ttk.Frame):
         top_label = ttk.Label(self, text="Customize Encoding by Grouping Values", font=("Arial", 14))
         top_label.grid(row=0, column=0, padx=5, pady=(20, 5), sticky="n")
 
-        self.create_group_btn = ttk.Button(self, text="Create Encoding Group", command=self.on_create_group_btn)
+        self.create_group_btn = ttk.Button(self, text="Create New Encoding Group", command=self.on_create_group_btn)
         self.create_group_btn.grid(row=1, column=0, padx=(100,5), pady=(10, 5), sticky="w")
 
-        ungrouped_label = ttk.Label(self, text="Remaining Values:", font=("Arial", 10))
+        ungrouped_label = ttk.Label(self, text="Remaining Values:", font=("Arial", 12))
         ungrouped_label.grid(row=2, column=0, padx=(100, 5), pady=(5, 5), sticky="w")
 
-        self.group_label = ttk.Label(self, text="Current Encoding:", font=("Arial", 10))
+        self.group_label = ttk.Label(self, text="Current Encoding:", font=("Arial", 12))
         self.group_label.grid(row=2, column=0, padx=(300, 5), pady=(5, 5), sticky="w")
 
-        self.ungrouped_listbox = tk.Listbox(self, selectmode="extended", height=10, width=30)
+        self.ungrouped_listbox = tk.Listbox(self, selectmode="extended", height=10, width=20)
         self.ungrouped_listbox.grid(row=3, column=0, padx=(100, 5), pady=(5, 5), sticky="w")
 
-        self.grouped_listbox = tk.Listbox(self, selectmode="extended", height=10, width=30)
+        self.grouped_listbox = tk.Listbox(self, selectmode="extended", height=10, width=20)
         self.grouped_listbox.grid(row=3, column=0, padx=(300, 5), pady=(5, 5), sticky="w")
 
         self.ungrouped_listbox.bind("<<ListboxSelect>>", lambda e: self.on_select_ungrouped())
@@ -64,12 +64,12 @@ class EncodeCustomFrame(ttk.Frame):
         self.assign_btn.grid(row=4, column=0, padx=(120, 5), pady=(10, 5), sticky="w")
 
         self.remove_btn = ttk.Button(self, text="Remove from Group", state="disabled", command=self.on_remove_btn)
-        self.remove_btn.grid(row=4, column=0, padx=(360, 5), pady=(10, 5), sticky="w")
+        self.remove_btn.grid(row=4, column=0, padx=(320, 5), pady=(10, 5), sticky="w")
 
         instruction_label = ttk.Label(
             self,
-            text="Hold Ctlrl key and Click to select multiple features at once or Hold Shift key and Click to select a range of features",
-            font=("Arial", 8)
+            text="Hold Ctrl key and Click to select multiple features at once or Hold Shift key and Click to select a range of features",
+            font=("Arial", 10)
         )
         instruction_label.grid(row=5, column=0, padx=(100,5), pady=(5, 5), sticky="w")
 
@@ -77,6 +77,7 @@ class EncodeCustomFrame(ttk.Frame):
         self.err_label.grid(row=6, column=0, padx=5, pady=(10, 5), sticky="n")
 
         self.grid_columnconfigure(0, weight=1)
+        btn_frame.grid_columnconfigure(0, weight=1)
 
     def on_create_group_btn(self):
         self.create_group_btn.destroy()
@@ -85,13 +86,13 @@ class EncodeCustomFrame(ttk.Frame):
         self.set_group_label.grid(row=1, column=0, padx=(100, 5), pady=(10, 5), sticky="w")
 
         self.group_name_entry = ttk.Entry(self, width=20)
-        self.group_name_entry.grid(row=1, column=0, padx=(225, 5), pady=(10, 5), sticky="w")
+        self.group_name_entry.grid(row=1, column=0, padx=(200, 5), pady=(10, 5), sticky="w")
 
         self.set_group_btn = ttk.Button(self, text="Set", width=8, command=self.on_set_group_btn)
-        self.set_group_btn.grid(row=1, column=0, padx=(360, 5), pady=(10, 5), sticky="w")
+        self.set_group_btn.grid(row=1, column=0, padx=(390, 5), pady=(10, 5), sticky="w")
 
         self.cancel_group_btn = ttk.Button(self, text="Cancel", width=8, command=self.on_cancel_group_btn)
-        self.cancel_group_btn.grid(row=1, column=0, padx=(425, 5), pady=(10, 5), sticky="w")
+        self.cancel_group_btn.grid(row=1, column=0, padx=(475, 5), pady=(10, 5), sticky="w")
 
         self.prev_btn.config(state="disabled")
         self.next_btn.config(state="disabled")

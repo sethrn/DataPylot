@@ -32,14 +32,14 @@ class InteractionFrame(GenerateCodeFrame):
         select_feat_text = ttk.Label(self.content_frame, text="Create Interaction:", font=("Arial", 12))
         select_feat_text.grid(row=2, column=0, padx=5, pady=(20, 5), sticky="w")
 
-        self.feat1_dropdown = ttk.Combobox(self.content_frame, state="disabled", width=25)
+        self.feat1_dropdown = ttk.Combobox(self.content_frame, state="disabled", width=18)
         self.feat1_dropdown.grid(row=2, column=0, padx=(150, 5), pady=(20, 5), sticky="w")
 
         x_label = ttk.Label(self.content_frame, text="X", font=("Arial", 14))
         x_label.grid(row=2, column=0, padx=(335,5), pady=(20,5), sticky="w")
         
-        self.feat2_dropdown = ttk.Combobox(self.content_frame, state="disabled", width=25)
-        self.feat2_dropdown.grid(row=2, column=0, padx=(375, 5), pady=(20, 5), sticky="w")
+        self.feat2_dropdown = ttk.Combobox(self.content_frame, state="disabled", width=18)
+        self.feat2_dropdown.grid(row=2, column=0, padx=(350, 5), pady=(20, 5), sticky="w")
 
         self.feat1_dropdown.bind("<<ComboboxSelected>>", lambda e: self.on_feat_selected())
         self.feat2_dropdown.bind("<<ComboboxSelected>>", lambda e: self.on_feat_selected())

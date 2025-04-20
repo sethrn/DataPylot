@@ -85,8 +85,8 @@ class RenameValueFrame(ttk.Frame):
 
         instruction_label = ttk.Label(
             self,
-            text="Hold Ctrl key to select multiple values or Shift key to select a range of values.",
-            font=("Arial", 8)
+            text="Hold Ctrl key and Click to select multiple features at once or Hold Shift key and Click to select a range of features",
+            font=("Arial", 10)
         )
         instruction_label.grid(row=4, column=0, padx=5, pady=(5, 10), sticky="n")
 

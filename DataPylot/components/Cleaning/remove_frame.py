@@ -55,8 +55,8 @@ class RemoveFeatureFrame(GenerateCodeFrame):
 
         instruction_label = ttk.Label(
             self.content_frame,
-            text="Hold Ctlrl key and Click to select multiple features at once or Hold Shift key and Click to select a range of features",
-            font=("Arial", 8)
+            text="Hold Ctrl key and Click to select multiple features at once or Hold Shift key and Click to select a range of features",
+            font=("Arial", 10)
         )
         instruction_label.grid(row=3, column=0, padx=5, pady=(5, 10), sticky="n")
 

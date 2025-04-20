@@ -30,7 +30,7 @@ class UnivariatePlotGenerator:
                     f"sns.boxplot(data={df}, x='{params['X Axis']}'"
                 )
                 if params.get("Color"):
-                    code += f", color='{params['Color']}"
+                    code += f", color='{params['Color']}'"
                 code += ")\n"
 
             case "Histogram":
